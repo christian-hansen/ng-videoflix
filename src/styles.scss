@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+button {
+    cursor: pointer;
+  }
+
+:root {
+    --main-bg-color: #ECEEFE;
+    --purple-1: #444DF2;
+    --purple-2: #797EF3;
+    --purple-3: #535AF1;
+    --text-gray: #686868;
+    --ligth-purple-lines: #ADB0D9;
+    --light-purple-bg: rgba(236, 238, 254, 1);
+    --light-purple-thread: rgba(173, 176, 217, 1);
+}
+
+// EXAMPLE 
+// .highlight-message-names {
+// background-color: var(--ligth-purple-lines);
+// cursor: pointer;
+// }
