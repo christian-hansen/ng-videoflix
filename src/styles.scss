@@ -1,12 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: DM SANS;
+    src: url(../public/assets/fonts/DMSans.ttf);
+    font-weight: normal;
+    font-size: normal;
+}
+
+* {
+    font-family: 'DM SANS' !important;
+  }
 
 html,
-body {
+body, app-root {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
-  position: relative;
+  overflow: hidden;
+//   background-color: black;
 }
 
 button {
@@ -14,18 +24,74 @@ button {
   }
 
 :root {
-    --main-bg-color: #ECEEFE;
-    --purple-1: #444DF2;
-    --purple-2: #797EF3;
-    --purple-3: #535AF1;
-    --text-gray: #686868;
-    --ligth-purple-lines: #ADB0D9;
-    --light-purple-bg: rgba(236, 238, 254, 1);
-    --light-purple-thread: rgba(173, 176, 217, 1);
+      /* Font size variables */
+    --small: 15px; // error messages
+    --body: 16px; // mobile texts plus desktop video description, toasts and static body
+    --lgbody: 18px; //desktop inputs, desktop help texts, button labels
+    --start: 20px; //mobile
+    --lgstart: 24px; //desktop
+    --smheadline: 32px; // static headline
+    --headline: 40px; // mobile headlines
+    --lgheadline: 48px; // desktop headlines
+    --title: 64px; // video title
+    --lgtitle: 88px; // desktop video title
+     /* Color variables */
+    --main: #2E3EDF;
+    --mainhover: #505ded;
+    --disabled: #2E3EDF50;
+    --error: #FF002E;
+    --whitetext: #FFFFFF;
 }
 
-// EXAMPLE 
-// .highlight-message-names {
-// background-color: var(--ligth-purple-lines);
-// cursor: pointer;
-// }
+.flex-row {
+    display: flex;
+  }
+  
+  .space-between {
+    justify-content: space-between;
+  }
+
+  .align-center {
+    align-items: center;
+  }
+
+.btn {
+    display: flex;
+    padding: 12px 24px;
+    gap: 10px;
+    border-radius: 40px;
+    opacity: 0px;
+    font-size: var(--lgbody);
+    font-weight: 700;
+    background-color: var(--main);
+    color: var(--whitetext);
+    border: none;
+
+    &:hover {
+        background-color: var(--mainhover);
+    }
+
+    &:disabled {
+        background-color: var(--disabled);
+        cursor: default !important;
+    }
+}
+
+app-footer {
+    display: flex;
+    justify-content: center;
+    font-size: var(--lgbody);
+    color: var(--whitetext);
+}
+
+app-header {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    width: calc(100% - 32px);
+    padding: 10px 16px;
+    height: calc(108px - 20px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
