@@ -1,126 +1,67 @@
-@font-face {
-    font-family: DM SANS;
-    src: url(../public/assets/fonts/DMSans.ttf);
-    font-weight: normal;
-    font-size: normal;
-}
-
-* {
-    font-family: 'DM SANS' !important;
-  }
+@import "primeicons/primeicons.css";
 
 html,
-body, app-root {
+body,
+app-root {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
   overflow: hidden;
-//   background-color: black;
 }
 
 button {
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
 
 :root {
-      /* Font size variables */
-    --small: 15px; // error messages
-    --body: 16px; // mobile texts plus desktop video description, toasts and static body
-    --lgbody: 18px; //desktop inputs, desktop help texts, button labels
-    --start: 20px; //mobile
-    --lgstart: 24px; //desktop
-    --smheadline: 32px; // static headline
-    --headline: 40px; // mobile headlines
-    --lgheadline: 48px; // desktop headlines
-    --title: 64px; // video title
-    --lgtitle: 88px; // desktop video title
-     /* Color variables */
-    --main: #2E3EDF;
-    --mainhover: #505ded;
-    --disabled: #2E3EDF50;
-    --error: #FF002E;
-    --whitetext: #FFFFFF;
+  /* Font size variables */
+  --small: 15px; // error messages
+  --body: 16px; // mobile texts plus desktop video description, toasts and static body
+  --lgbody: 18px; //desktop inputs, desktop help texts, button labels
+  --start: 20px; //mobile
+  --lgstart: 24px; //desktop
+  --smheadline: 32px; // static headline
+  --headline: 40px; // mobile headlines
+  --lgheadline: 48px; // desktop headlines
+  --title: 64px; // video title
+  --lgtitle: 88px; // desktop video title
+
+  /* Color variables */
+  --main: #2e3edf;
+  --mainhover: #505ded;
+  --disabled: #2e3edf50;
+  --error: #ff002e;
+  --whitetext: #ffffff;
 }
 
 .flex-row {
-    display: flex;
-  }
-  
-  .space-between {
-    justify-content: space-between;
-  }
-
-  .align-center {
-    align-items: center;
-  }
-
-.btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    padding: 12px 24px;
-    gap: 8px;
-    border-radius: 40px;
-    font-size: var(--lgbody);
-    font-weight: 700;
-    background-color: var(--main);
-    color: var(--whitetext);
-    border: none;
-
-    &:hover {
-        background-color: var(--mainhover);
-    }
-
-    &:disabled {
-        background-color: var(--disabled);
-        cursor: default !important;
-    }
-
-    svg {
-        height: 16px;
-        width: 16px;
-        padding: 0 0px
-    }
+  display: flex;
 }
 
-input {
-    border: 1px solid #FFFFFF;
-    border-radius: 40px;
-    padding: 12px 24px;
-    font-size: var(--body);
-    background: none;
-    color: white !important;
-    
-    &::placeholder {
-        color: white;
-    }
+.space-between {
+  justify-content: space-between;
+}
 
-    &:focus-visible {
-        outline-color: var(--mainhover);
-        border: none;
-        // outline-offset: 2px;
-        // outline-width: 2px;
-        outline-style: solid;
-    }
+.align-center {
+  align-items: center;
 }
 
 app-footer {
-    display: flex;
-    justify-content: center;
-    font-size: var(--lgbody);
-    color: var(--whitetext);
+  display: flex;
+  justify-content: center;
+  font-size: var(--lgbody);
+  color: var(--whitetext);
 }
 
 app-header {
-    position: fixed;
-    top: 0;
-    z-index: 2;
-    width: calc(100% - 32px);
-    padding: 10px 16px;
-    height: calc(108px - 20px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+  padding: 10px 16px;
+  height: calc(108px - 20px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
