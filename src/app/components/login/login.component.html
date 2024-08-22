@@ -1,1 +1,48 @@
-<p>login works!</p>
+<div class="login">
+    <div class="login-card">
+        <div class="flex-column gap-lg align-center">
+            <h2>Log In</h2>
+            <form (ngSubmit)="test()" class="authform" [formGroup]="loginForm">
+                <input
+                type="email"
+                formControlName="email"
+                pInputText
+                placeholder="Email"
+                />
+
+                <p-password 
+                formControlName="password" [feedback]="false" placeholder="Password" />
+
+                <p-button 
+                label="Log In"
+                [rounded]="true"
+                severity="primary"
+                type="submit"/>
+            </form>
+            </div>
+    </div>
+</div>
+
+    <!-- <div class="login-start">
+      <div class="startheadline">Movies, TV shows, and more</div>
+      <div class="starttext">Watch whenever you want wherever you want</div>
+      <div class="formtext">Enter your email to create or login to your account</div>
+      <div>
+        <input
+          type="email"
+          pInputText
+          placeholder="Email Address"
+          [(ngModel)]="email"
+        />
+    
+      </div>
+      <p-button
+        label="Sign Up"
+        icon="pi pi-chevron-right"
+        iconPos="right"
+        [rounded]="true"
+        severity="primary"
+      />
+    </div> -->
+
+  

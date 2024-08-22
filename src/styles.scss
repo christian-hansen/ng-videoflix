@@ -39,6 +39,11 @@ button {
   display: flex;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .space-between {
   justify-content: space-between;
 }
@@ -46,6 +51,41 @@ button {
 .align-center {
   align-items: center;
 }
+
+.gap-lg {
+  gap: 32px
+}
+
+// Login
+
+.authform {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  // gap: 16px;
+
+  // p-input, p-password {
+  //   width: 100%;
+  // }
+}
+
+
+.login-card {
+  background-color: white;
+  width: 90%;
+  height: auto;
+  border-radius: 40px;
+  padding: 16px;
+
+  h2 {
+    margin: 0;
+    font-size: var(--headline);
+    color: var(--main);
+  }
+}
+
+// Apps
 
 app-footer {
   display: flex;
