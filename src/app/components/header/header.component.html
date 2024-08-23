@@ -1,2 +1,9 @@
 <div style="color: white; font-size: 32px">VIDEOFLIX</div>
-<p-button label="Log in" [rounded]="true" severity="primary" (click)="login()" />
+@if (isHideLoginButtonRoute()) {
+<p-button
+  label="Log in"
+  [rounded]="true"
+  severity="primary"
+  (click)="login()"
+/>
+}

@@ -9,11 +9,12 @@ import { MessagesModule } from 'primeng/messages';
 import { CheckboxModule } from 'primeng/checkbox';
 import { Message } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
+import { AutoFocusModule } from 'primeng/autofocus';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ButtonModule, FormsModule, InputTextModule, CardModule, PasswordModule, ReactiveFormsModule, MessagesModule, CheckboxModule, DividerModule],
+  imports: [ButtonModule, FormsModule, InputTextModule, CardModule, PasswordModule, ReactiveFormsModule, MessagesModule, CheckboxModule, DividerModule, AutoFocusModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -28,13 +29,15 @@ export class RegisterComponent {
   }
 
   ngOnInit(){
+    console.log("this.data.email in register component", this.data.email);
+    
     this.buildRegisterForm();
     // this.email = this.data.email;
   }
 
   buildRegisterForm() {
     this.registerForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl(this.data.email, [Validators.required, Validators.email]),
       first_name: new FormControl('', [
         Validators.minLength(2),
         Validators.required,

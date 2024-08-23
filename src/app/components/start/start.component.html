@@ -9,6 +9,7 @@
         pInputText
         placeholder="Email Address"
         [(ngModel)]="enteredEmail"
+        pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$"
       />
   
     </div>
@@ -18,7 +19,7 @@
       iconPos="right"
       [rounded]="true"
       severity="primary"
-      (click)="forwardEmail()"
+      (click)="forwardEmailToSignUp()"
     />
   </div>
 </div>

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DataService } from '../../services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start',
@@ -14,12 +15,13 @@ import { DataService } from '../../services/data.service';
 export class StartComponent {
   public enteredEmail!: string;
 
-  constructor(public data: DataService) {
+  constructor(public data: DataService, private router: Router) {
 
   }
 
-  forwardEmail() {
+  forwardEmailToSignUp() {
     this.data.email = this.enteredEmail;
+    this.router.navigate(['register'])
     console.log("this.data.email", this.data.email);
     
   }
