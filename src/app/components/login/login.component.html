@@ -1,0 +1,67 @@
+<div class="login">
+  <div class="login-card">
+    <div class="flex-column gap-md align-center text-center">
+      <h2>Log In</h2>
+      <p-messages
+        [(value)]="messages"
+        [showTransitionOptions]="'500ms'"
+        [hideTransitionOptions]="'500ms'"
+        [enableService]="false"
+        [closable]="false"
+      />
+      <form (ngSubmit)="test()" [formGroup]="loginForm">
+        <div class="form-row">
+          <input
+            type="text"
+            pInputText
+            name="email"
+            placeholder="E-Mail Address"
+            formControlName="email"
+            required
+          />
+        </div>
+        <div class="form-row">
+          <p-password
+            name="password"
+            placeholder="Password"
+            formControlName="password"
+            [feedback]="false"
+            [toggleMask]="true"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="checkbox-container">
+            <p-checkbox
+              formControlName="setCookie"
+              [binary]="isCookieSet"
+              [disabled]="isLoading"
+              (onChange)="setCookie()"
+              inputId="binary"
+            />
+            <label for="binary">Remember me</label>
+          </div>
+        </div>
+        <p-button
+            icon="pi pi-chevron-right"
+        iconPos="right"
+          [loading]="isLoading"
+          [disabled]="!loginForm.valid"
+          [rounded]="true"
+          severity="primary"
+          label="Log In"
+          type="submit"
+          [class]="{ width: '100%' }"
+        />
+      </form>
+      <div>Forgot Password?</div>
+      <div class="form-row">
+        <div class="bottom">
+          <div>New to Videoflix?</div>
+          <div>Sign Up now</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

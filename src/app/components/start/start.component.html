@@ -1,0 +1,24 @@
+<div class="start">
+  <div class="login-start">
+    <div class="startheadline">Movies, TV shows, and more</div>
+    <div class="starttext">Watch whenever you want wherever you want</div>
+    <div class="formtext">Enter your email to create or login to your account</div>
+    <div>
+      <input
+        type="email"
+        pInputText
+        placeholder="Email Address"
+        [(ngModel)]="enteredEmail"
+      />
+  
+    </div>
+    <p-button
+      label="Sign Up"
+      icon="pi pi-chevron-right"
+      iconPos="right"
+      [rounded]="true"
+      severity="primary"
+      (click)="forwardEmail()"
+    />
+  </div>
+</div>
