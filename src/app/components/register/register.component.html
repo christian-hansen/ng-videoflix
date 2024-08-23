@@ -1,1 +1,60 @@
-<p>register works!</p>
+<div class="login">
+    <div class="login-card">
+        <div class="flex-column gap-md align-center text-center">
+        <h2>Sign Up</h2>
+  
+        <p-messages
+          [(value)]="messages"
+          [showTransitionOptions]="'500ms'"
+          [hideTransitionOptions]="'500ms'"
+          [enableService]="false"
+          [closable]="false"
+        />
+  
+        <form (ngSubmit)="register()" [formGroup]="registerForm">
+          <div class="form-row">
+              <input
+                type="email"
+                pInputText
+                name="email"
+                required
+                placeholder="Enter E-Mail"
+                formControlName="email"
+                pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$"
+              />
+            </div>
+          <div class="form-row">
+              <p-password
+                name="password"
+                [feedback]="true"
+                required
+                placeholder="Enter Password"
+                formControlName="password"
+                [toggleMask]="true"
+              />
+              
+            </div>
+            <div class="form-row">
+
+              <p-password
+                name="password_repeat"
+                [feedback]="false"
+                required
+                placeholder="Repeat Password"
+                formControlName="password_repeat"
+                [toggleMask]="true"
+              />
+            </div>
+
+          <p-button
+            icon="pi pi-check"
+            [loading]="isLoading"
+            [disabled]="!registerForm.valid"
+            label="Submit"
+            type="submit"
+            [class]="{ width: '100%' }"
+          />
+        </form>
+      </div>
+  </div>
+</div>
