@@ -8,6 +8,7 @@ app-root {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  font-size: var(--body);
 }
 
 button {
@@ -17,7 +18,7 @@ button {
 :root {
   /* Font size variables */
   --small: 15px; // error messages
-  --body: 16px; // mobile texts plus desktop video description, toasts and static body
+  --body: 14px; // mobile texts plus desktop video description, toasts and static body
   --lgbody: 18px; //desktop inputs, desktop help texts, button labels
   --start: 20px; //mobile
   --lgstart: 24px; //desktop
@@ -28,7 +29,8 @@ button {
   --lgtitle: 88px; // desktop video title
 
   /* Color variables */
-  --main: #2e3edf;
+  // --main: #2e3edf;
+  --main: #3B82F6; //primeNG
   --mainhover: #505ded;
   --disabled: #2e3edf50;
   --error: #ff002e;
@@ -52,37 +54,81 @@ button {
   align-items: center;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.gap-sm {
+  gap: 8px;
+}
+
+.gap-md {
+  gap: 16px;
+}
+
 .gap-lg {
   gap: 32px
 }
 
 // Login
 
-.authform {
-  display: flex;
-  flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-  // gap: 16px;
+// .authform {
+//   display: flex;
+//   flex-direction: column;
+//   padding: 16px;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 16px;
+//   width: 100%;
+// }
 
-  // p-input, p-password {
-  //   width: 100%;
-  // }
+
+input {
+  width: 100%;
 }
 
 
 .login-card {
+  // background-color: rgba(255, 255, 255, 0.1);
   background-color: white;
   width: 90%;
+  max-width: 520px;
   height: auto;
   border-radius: 40px;
-  padding: 16px;
+  padding: 32px;
+
+  .form-row {
+    width: 100%;
+  }
+
+  div > form {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  // div {
+  //   width: 100%;
+  // }
 
   h2 {
     margin: 0;
     font-size: var(--headline);
     color: var(--main);
   }
+
+  .bottom {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+.checkbox-container {
+  display: flex;
+  gap: 8px;
+  width: 500px;
 }
 
 // Apps
