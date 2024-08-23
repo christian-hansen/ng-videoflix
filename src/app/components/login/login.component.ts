@@ -71,11 +71,11 @@ setCookie() {
     if (e.status === 0) {
       console.error(e)
       this.messages = [
-        { severity: 'error', detail: `There is a problem with the server (${e.status})` },
+        { severity: 'info', detail: `There is a problem with the server (${e.status})` },
       ];}
     else {
       this.messages = [
-        { severity: 'error', detail: `${e.error.non_field_errors} (${e.status})` },
+        { severity: 'info', detail: `${e.error.non_field_errors} (${e.status})` },
       ];}
     this.isLoading = false;
     }

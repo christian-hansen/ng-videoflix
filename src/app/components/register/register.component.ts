@@ -52,6 +52,11 @@ export class RegisterComponent {
 
   }
 
+  isEmailAdressDefined() {
+    if (this.data.email === undefined) return false
+    else return true
+  }
+
   resetForm() {
     this.isLoading = false;
   }
