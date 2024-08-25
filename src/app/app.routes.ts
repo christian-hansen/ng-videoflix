@@ -9,4 +9,6 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'videos', component: VideosComponent },
+    { path: 'imprint', component: VideosComponent },
+    { path: 'privacy', component: VideosComponent },
 ];
