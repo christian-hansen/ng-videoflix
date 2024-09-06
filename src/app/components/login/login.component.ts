@@ -17,10 +17,9 @@ import { Message } from 'primeng/api';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  
-loginForm!: FormGroup;
 isLoading: boolean = false;
-isCookieSet: boolean = false;
+// public isCookieSet: boolean = false;
+loginForm!: FormGroup;
 messages: Message[] = [];
 
 constructor(private data:DataService) {
@@ -29,6 +28,7 @@ constructor(private data:DataService) {
 
 ngOnInit(){
   this.buildLoginForm();
+  
   // this.email = this.data.email;
 }
 
@@ -38,6 +38,7 @@ buildLoginForm() {
     password: new FormControl('', [Validators.required]),
     setCookie: new FormControl<string | null>(null)
 });
+  this.watchSetCookieChanges();
 }
 
 test() {
@@ -56,16 +57,18 @@ non_field_errors: 'Non field error'}
     
   }
 
-setCookie() {
-  const currentValue = this.loginForm.get('setCookie')?.value;
-  if (currentValue) {
-    console.log("Cookie set");
-  } else {
-    console.log('Cookie not set');
-    
+  watchSetCookieChanges() {
+    this.loginForm.get('setCookie')?.enable;
+    this.loginForm.get('setCookie')?.valueChanges.subscribe(value => {  
+      if (value[0] === "cookieSet") {
+        console.log("Cookie set");
+        //TODO save cookie
+      } else {
+        console.log("Cookie not set");
+        //TODO clear cookie
+      }
+    });
   }
-  
-}
 
   displayErrorMessage(e: any) {
     if (e.status === 0) {

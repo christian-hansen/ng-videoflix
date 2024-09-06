@@ -34,25 +34,23 @@
         <div class="form-row">
           <div class="checkbox-container">
             <p-checkbox
-              formControlName="setCookie"
-              [binary]="isCookieSet"
-              [disabled]="isLoading"
-              (onChange)="setCookie()"
-              inputId="binary"
+            formControlName="setCookie"
+            value="cookieSet"
+            inputId="binary"
             />
             <label for="binary">Remember me</label>
           </div>
         </div>
         <p-button
-            icon="pi pi-chevron-right"
+        icon="pi pi-chevron-right"
         iconPos="right"
-          [loading]="isLoading"
-          [disabled]="!loginForm.valid"
-          [rounded]="true"
-          severity="primary"
-          label="Log In"
-          type="submit"
-          [class]="{ width: '100%' }"
+        [loading]="isLoading"
+        [disabled]="!loginForm.valid"
+        [rounded]="true"
+        severity="primary"
+        label="Log In"
+        type="submit"
+        [class]="{ width: '100%' }"
         />
       </form>
       <div>Forgot Password?</div>
