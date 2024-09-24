@@ -37,6 +37,10 @@ export class RegisterComponent {
 
   buildRegisterForm() {
     this.registerForm = new FormGroup({
+      username: new FormControl('', [
+        Validators.minLength(2),
+        Validators.required,
+      ]),
       email: new FormControl(this.data.email, [Validators.required, Validators.email]),
       first_name: new FormControl('', [
         Validators.minLength(2),

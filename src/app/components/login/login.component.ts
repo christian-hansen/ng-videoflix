@@ -34,7 +34,7 @@ ngOnInit(){
 
 buildLoginForm() {
   this.loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     setCookie: new FormControl<string | null>(null)
 });
@@ -42,12 +42,12 @@ buildLoginForm() {
 }
 
 test() {
-    const email = this.loginForm.get('email')?.value;
+    const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
-    console.log('Email:', email);
+    console.log('Username:', username);
     console.log('Password:', password);
-    this.data.email = email;
-    console.log("this.data.email", this.data.email);
+    this.data.username = username;
+    console.log("this.data.username", this.data.username);
     let error = {
       status: 'Status', 
       error: {
@@ -71,6 +71,8 @@ non_field_errors: 'Non field error'}
   }
 
   displayErrorMessage(e: any) {
+    console.log(e);
+    
     if (e.status === 0) {
       console.error(e)
       this.messages = [

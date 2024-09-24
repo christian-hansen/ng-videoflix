@@ -13,6 +13,16 @@
   
         <form (ngSubmit)="register()" [formGroup]="registerForm">
           <div class="form-row">
+            <input
+              type="text"
+              pInputText
+              name="username"
+              required
+              placeholder="Enter Username"
+              formControlName="username"
+            />
+          </div>
+          <div class="form-row">
               <input
                 type="email"
                 pAutoFocus 
