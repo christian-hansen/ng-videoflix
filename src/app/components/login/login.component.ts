@@ -8,6 +8,8 @@ import { PasswordModule } from 'primeng/password';
 import { MessagesModule } from 'primeng/messages';
 import { CheckboxModule } from 'primeng/checkbox';
 import { Message } from 'primeng/api';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,14 +24,12 @@ isLoading: boolean = false;
 loginForm!: FormGroup;
 messages: Message[] = [];
 
-constructor(private data:DataService) {
+constructor(private data:DataService, private router: Router, private auth: AuthService) {
 
 }
 
 ngOnInit(){
   this.buildLoginForm();
-  
-  // this.email = this.data.email;
 }
 
 buildLoginForm() {
@@ -41,20 +41,20 @@ buildLoginForm() {
   this.watchSetCookieChanges();
 }
 
-test() {
-    const username = this.loginForm.get('username')?.value;
-    const password = this.loginForm.get('password')?.value;
-    console.log('Username:', username);
-    console.log('Password:', password);
-    this.data.username = username;
-    console.log("this.data.username", this.data.username);
-    let error = {
-      status: 'Status', 
-      error: {
-non_field_errors: 'Non field error'}
-      }
-    this.displayErrorMessage(error)
-    
+  async login() {
+    this.isLoading = true;
+    let loginFormData = {
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password,
+    };
+
+    try {
+      let resp: any = await this.auth.loginWithUsernameAndPassword(loginFormData);
+      localStorage.setItem('token', resp.token);
+      this.router.navigateByUrl('/videos');
+    } catch (e: any) {
+      this.displayErrorMessage(e)
+    }
   }
 
   watchSetCookieChanges() {

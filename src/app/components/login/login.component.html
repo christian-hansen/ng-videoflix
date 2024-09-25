@@ -9,7 +9,7 @@
         [enableService]="false"
         [closable]="false"
       />
-      <form (ngSubmit)="test()" [formGroup]="loginForm">
+      <form (ngSubmit)="login()" [formGroup]="loginForm">
         <div class="form-row">
           <input
             type="text"
@@ -31,7 +31,7 @@
           />
         </div>
 
-        <div class="form-row">
+        <!-- <div class="form-row">
           <div class="checkbox-container">
             <p-checkbox
             formControlName="setCookie"
@@ -40,7 +40,7 @@
             />
             <label for="binary">Remember me</label>
           </div>
-        </div>
+        </div> -->
         <p-button
         icon="pi pi-chevron-right"
         iconPos="right"

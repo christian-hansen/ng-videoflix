@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DataService } from '../../services/data.service';
@@ -30,30 +30,52 @@ export class RegisterComponent {
 
   ngOnInit(){
     console.log("this.data.email in register component", this.data.email);
-    
     this.buildRegisterForm();
-    // this.email = this.data.email;
+
+      // Subscribe to form's statusChanges to log validity state
+  this.registerForm.statusChanges.subscribe(status => {
+    console.log('Form Valid:', this.registerForm.valid);
+  });
   }
 
   buildRegisterForm() {
     this.registerForm = new FormGroup({
       username: new FormControl('', [
-        Validators.minLength(2),
+        Validators.minLength(3),
         Validators.required,
       ]),
       email: new FormControl(this.data.email, [Validators.required, Validators.email]),
-      first_name: new FormControl('', [
-        Validators.minLength(2),
-        Validators.required,
-      ]),
+      // first_name: new FormControl('', [
+      //   Validators.minLength(2),
+      //   Validators.required,
+      // ]),
+      // last_name: new FormControl('', [
+      //   Validators.minLength(2),
+      //   Validators.required,
+      // ]),
       password: new FormControl('', [Validators.required]),
       password_repeat: new FormControl('', [Validators.required]),
+    }, { validators: this.passwordsMatchValidator });
+  }
 
-  });
+  // Custom validator to check if passwords match
+  passwordsMatchValidator(form: AbstractControl): { [key: string]: boolean } | null {
+    const password = form.get('password')?.value;
+    const passwordRepeat = form.get('password_repeat')?.value;
+
+    if (password !== passwordRepeat) {
+      return { passwordsMismatch: true };
+    }
+    return null;
   }
 
   register() {
-
+    if (this.registerForm.valid) {
+      console.log(this.registerForm.get('username')?.value);
+      console.log(this.registerForm.get('email')?.value);
+      console.log(this.registerForm.get('password')?.value);
+      
+    }
   }
 
   isEmailAdressDefined() {
@@ -65,7 +87,4 @@ export class RegisterComponent {
     this.isLoading = false;
   }
 
-  isPassWordsMatching(): boolean {
-    return this.registerForm.value.password === this.registerForm.value.password_repeat;
-  }
 }
