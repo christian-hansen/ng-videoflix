@@ -7,6 +7,7 @@ import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { MessagesModule } from 'primeng/messages';
 import { CheckboxModule } from 'primeng/checkbox';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { Message } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
 import { AutoFocusModule } from 'primeng/autofocus';
@@ -16,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ButtonModule, FormsModule, InputTextModule, CardModule, PasswordModule, ReactiveFormsModule, MessagesModule, CheckboxModule, DividerModule, AutoFocusModule],
+  imports: [ButtonModule, FormsModule, InputTextModule, CardModule, PasswordModule, ReactiveFormsModule, MessagesModule, CheckboxModule, DividerModule, AutoFocusModule, FloatLabelModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })

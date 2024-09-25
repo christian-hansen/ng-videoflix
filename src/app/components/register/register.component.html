@@ -13,36 +13,46 @@
   
         <form (ngSubmit)="register()" [formGroup]="registerForm">
           <div class="form-row">
-            <input
-              type="text"
-              pInputText
-              name="username"
-              required
-              placeholder="Enter Username"
-              formControlName="username"
-            />
+            <p-floatLabel>
+              <input
+                type="text"
+                pInputText
+                name="username"
+                required
+                placeholder="Enter Username"
+                formControlName="username"
+              />
+              <label for="username">Username</label>
+            </p-floatLabel>
           </div>
           <div class="form-row">
-            <input
-              type="text"
-              pInputText
-              name="first_name"
-              required
-              placeholder="Enter First Name"
-              formControlName="first_name"
-            />
+            <p-floatLabel>
+              <input
+                type="text"
+                pInputText
+                name="first_name"
+                required
+                placeholder="Enter First Name"
+                formControlName="first_name"
+              />
+              <label for="first_name">First Name</label>
+            </p-floatLabel>
           </div>
           <div class="form-row">
-            <input
-              type="text"
-              pInputText
-              name="last_name"
-              required
-              placeholder="Enter Last Name"
-              formControlName="last_name"
-            />
+            <p-floatLabel>
+              <input
+                type="text"
+                pInputText
+                name="last_name"
+                required
+                placeholder="Enter Last Name"
+                formControlName="last_name"
+              />
+              <label for="last_name">Last Name</label>
+            </p-floatLabel>
           </div>
           <div class="form-row">
+            <p-floatLabel>
               <input
                 type="email"
                 pAutoFocus 
@@ -54,8 +64,11 @@
                 formControlName="email"
                 pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$"
               />
-            </div>
+              <label for="email">E-Mail</label>
+            </p-floatLabel>
+          </div>
           <div class="form-row">
+            <p-floatLabel>
               <p-password
                 name="password"
                 [feedback]="true"
@@ -64,10 +77,11 @@
                 formControlName="password"
                 [toggleMask]="true"
               />
-              
-            </div>
-            <div class="form-row">
-
+              <label for="password">Password</label>
+            </p-floatLabel>
+          </div>
+          <div class="form-row">
+            <p-floatLabel>
               <p-password
                 name="password_repeat"
                 [feedback]="false"
@@ -76,6 +90,8 @@
                 formControlName="password_repeat"
                 [toggleMask]="true"
               />
+              <label for="password_repeat">Repeat Password</label>
+            </p-floatLabel>
             </div>
 
           <p-button

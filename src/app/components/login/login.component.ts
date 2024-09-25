@@ -7,6 +7,7 @@ import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { MessagesModule } from 'primeng/messages';
 import { CheckboxModule } from 'primeng/checkbox';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { Message } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -14,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ButtonModule, FormsModule, InputTextModule, CardModule, PasswordModule, ReactiveFormsModule, MessagesModule, CheckboxModule],
+  imports: [ButtonModule, FormsModule, InputTextModule, CardModule, PasswordModule, ReactiveFormsModule, MessagesModule, CheckboxModule, FloatLabelModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
