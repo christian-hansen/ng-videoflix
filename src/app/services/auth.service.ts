@@ -27,9 +27,9 @@ export class AuthService {
     const body = {
       username: registerFormData.username,
       email: registerFormData.email,
-      password: registerFormData.password,
       first_name: registerFormData.first_name,
       last_name: registerFormData.last_name,
+      password: registerFormData.password,
     };
 
     return lastValueFrom(this.http.post(url, body));

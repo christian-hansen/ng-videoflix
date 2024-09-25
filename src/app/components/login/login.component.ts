@@ -78,6 +78,11 @@ buildLoginForm() {
       this.messages = [
         { severity: 'info', detail: `There is a problem with the server (${e.status})` },
       ];}
+    else if (e.status === 403) {
+      this.messages = [
+        { severity: 'info', detail: `${e.error.error}` },
+      ];
+    }
     else {
       this.messages = [
         { severity: 'info', detail: `${e.error.non_field_errors} (${e.status})` },

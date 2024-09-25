@@ -10,6 +10,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { Message } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
 import { AutoFocusModule } from 'primeng/autofocus';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +26,7 @@ export class RegisterComponent {
   isCookieSet: boolean = false;
   messages: Message[] = [];
   
-  constructor(private data:DataService) {
+  constructor(private data:DataService, private auth: AuthService, private router: Router,) {
   
   }
 
@@ -45,14 +47,14 @@ export class RegisterComponent {
         Validators.required,
       ]),
       email: new FormControl(this.data.email, [Validators.required, Validators.email]),
-      // first_name: new FormControl('', [
-      //   Validators.minLength(2),
-      //   Validators.required,
-      // ]),
-      // last_name: new FormControl('', [
-      //   Validators.minLength(2),
-      //   Validators.required,
-      // ]),
+      first_name: new FormControl('', [
+        Validators.minLength(2),
+        Validators.required,
+      ]),
+      last_name: new FormControl('', [
+        Validators.minLength(2),
+        Validators.required,
+      ]),
       password: new FormControl('', [Validators.required]),
       password_repeat: new FormControl('', [Validators.required]),
     }, { validators: this.passwordsMatchValidator });
@@ -64,19 +66,38 @@ export class RegisterComponent {
     const passwordRepeat = form.get('password_repeat')?.value;
 
     if (password !== passwordRepeat) {
+      // this.messages = [
+      //   { severity: 'error', detail: `Passwords are not matching` },
+      // ];
       return { passwordsMismatch: true };
     }
     return null;
   }
 
-  register() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.get('username')?.value);
-      console.log(this.registerForm.get('email')?.value);
-      console.log(this.registerForm.get('password')?.value);
-      
-    }
-  }
+  async register() {
+    this.isLoading = true;
+    let regFormData = {
+      username: this.registerForm.value.username,
+      email: this.registerForm.value.email,
+      first_name: this.registerForm.value.first_name,
+      last_name: this.registerForm.value.last_name,
+      password: this.registerForm.value.password,
+    };
+
+    console.log(regFormData);
+    
+
+    try {
+        let resp: any = await this.auth.registerWithUsernameAndPassword(regFormData);
+        console.log(resp.message);
+        this.router.navigate(['/register-success']);
+      } catch (e: any) {
+        this.messages = [{ severity: 'error', detail: `${e.error.error}` }];
+        console.error(e);
+        this.resetForm();
+      }
+    } 
+  
 
   isEmailAdressDefined() {
     if (this.data.email === undefined) return false
