@@ -1,1 +1,13 @@
-<p>register-success works!</p>
+<div class="start">
+    <div class="login-start">
+        <div class="startheadline">Your account has been successfully registered!</div>
+        <div class="starttext">Before logging in, please activate your account.<br>An email has been sent to you with an activation link. Simply click the link to activate your account and get started.</div>
+        <p-button
+        label="Go To Login"
+        icon="pi pi-chevron-right"
+        iconPos="right"
+        [rounded]="true"
+        severity="primary"
+        (click)="directToLogin()"
+      />
+</div>
