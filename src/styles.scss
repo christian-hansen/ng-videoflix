@@ -7,7 +7,7 @@ app-root {
   padding: 0;
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  // overflow: hidden;
   font-size: var(--body);
 }
 
@@ -71,20 +71,29 @@ button {
 }
 
 // Start & Static
-.start {
-  background: 
-      linear-gradient(180deg, #000000 -9.91%, rgba(0, 0, 0, 0.75) 54.3%, #000000 98.36%),
-      url(/assets/img/start.jpeg);
+
+.static, .start {
   position: relative;
   min-height: 100vh;
   background-size: auto;
   background-attachment: fixed;
   z-index: 0;
   color: white;
-
-  //Position the content in the center of the page
   display: flex;
   flex-direction: column;
+  }
+
+.static {
+  background-color: black;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 96px 5%;
+  }
+
+.start {
+  background: 
+      linear-gradient(180deg, #000000 -9.91%, rgba(0, 0, 0, 0.75) 54.3%, #000000 98.36%),
+      url(/assets/img/start.jpeg);
   align-items: center;
   justify-content: center;
 }
@@ -200,8 +209,13 @@ input {
 // Apps
 
 app-footer {
+  position: relative;
+  margin-top: -61px;
+  bottom: 20px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
   font-size: var(--lgbody);
   color: var(--whitetext);
 }
