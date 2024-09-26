@@ -168,7 +168,7 @@ input {
   }
 
   div > form {
-    width: 100%;
+    width: 100%; //TODO check if reduce with to 90% on desktop
     text-align: center;
     display: flex;
     flex-direction: column;

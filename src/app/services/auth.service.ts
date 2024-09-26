@@ -35,4 +35,14 @@ export class AuthService {
     return lastValueFrom(this.http.post(url, body));
   }
 
+  public requestPasswordReset(emailData:string) {
+    const url = environment.baseUrl + '/password-reset/';
+    const body = {
+      email: emailData,
+    };
+    console.log(url, body);
+    
+    return lastValueFrom(this.http.post(url, body));
+  }
+
 }

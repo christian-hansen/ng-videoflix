@@ -7,6 +7,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -20,7 +21,7 @@ export class ForgotPasswordComponent {
   messages: Message[] = [];
   isLoading: boolean = false;
 
-  constructor() {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit(){
     this.buildForgotPasswordForm();
@@ -47,11 +48,14 @@ export class ForgotPasswordComponent {
   });
   }
 
-  triggerForgotPasswordMail() {
+  async triggerForgotPasswordMail() {
     const email = this.forgotPasswordForm.get('email')?.value
     console.log("Password reset mail sent to", email);
+    // response = self.client.post('/api/v1/password-reset/', {'email': 'test@example.com'})
     try {
-      // let resp: any = await this.auth.loginWithUsernameAndPassword(loginFormData);
+      let resp: any = await this.auth.requestPasswordReset(email);
+      console.log(resp);
+      
       // this.router.navigateByUrl('');
     } catch (e: any) {
       this.displayErrorMessage(e)
