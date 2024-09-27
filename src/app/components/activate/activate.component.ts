@@ -24,20 +24,21 @@ export class ActivateComponent {
     this.activateAccount();
   }
 
-  activateAccount(): void {
-    this.route.params.subscribe((params) => {
-      const uidb64 = params['id'];
-      const token = params['token'];
+  async activateAccount(): Promise<void> {
+    // Extract 'uidb64' and 'token' from the route parameters using snapshot or async subscribe
+    const uidb64 = this.route.snapshot.params['id'];
+    const token = this.route.snapshot.params['token'];
 
-      this.auth.activateAccount(uidb64, token).subscribe({
-        next: (response) => {
-          this.activationSuccess = true;
-        },
-        error: (error) => {
-          this.errorMessage = error.error.error;
-        },
-      });
-    });
+    try {
+      // Await the activation response from the auth service
+      const response = await this.auth.activateAccount(uidb64, token);
+      // If successful, set success flag
+      this.activationSuccess = true;
+    } catch (e: any) {
+      // Handle error and set error message
+      this.errorMessage = e.error ? e.error.error : 'Activation failed';
+      console.error('Activation failed', e);
+    }
   }
 
   directToLogin(): void {
