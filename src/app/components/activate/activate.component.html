@@ -1,0 +1,18 @@
+<div class="start">
+    <div class="login-start">
+        @if (activationSuccess) {
+            <div class="startheadline">Your account has been successfully activated!</div>
+            <div class="starttext">You can now log in to your account.</div>
+            <p-button
+            label="Go To Login"
+            icon="pi pi-chevron-right"
+            iconPos="right"
+            [rounded]="true"
+            severity="primary"
+            (click)="directToLogin()"
+          />
+        } @else {
+            <div class="startheadline">Your account activation failed</div>
+            <div class="starttext">{{errorMessage}} Please contact the admin.</div> 
+        }
+    </div>

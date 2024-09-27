@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { catchError, lastValueFrom, of, throwError } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
@@ -43,6 +43,22 @@ export class AuthService {
     console.log(url, body);
     
     return lastValueFrom(this.http.post(url, body));
+  }
+
+  public activateAccount(uidb64: string, token: string) {
+    console.log(uidb64);
+    console.log(token);
+    
+    
+    const url = environment.baseUrl + `/activate/${uidb64}/${token}/`;
+    console.log(url);
+    
+    return this.http.get(url).pipe(
+      catchError(error => {
+        console.error('Activation failed', error);
+        return throwError(error);
+      })
+    );
   }
 
 }

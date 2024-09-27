@@ -7,14 +7,16 @@ import { RegisterSuccessComponent } from './components/register-success/register
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { StaticImprintComponent } from './components/static-imprint/static-imprint.component';
+import { ActivateComponent } from './components/activate/activate.component';
 
 export const routes: Routes = [
     { path: '', component: StartComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'register-success', component: RegisterSuccessComponent },
+    { path: 'activate/:id/:token', component: ActivateComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
-    { path: 'reset-password', component: ResetPasswordComponent },
+    { path: 'reset-password/:id/:token', component: ResetPasswordComponent },
     { path: 'videos', component: VideosComponent },
     { path: 'imprint', component: StaticImprintComponent },
     { path: 'privacy', component: StaticImprintComponent },
