@@ -40,18 +40,12 @@ export class AuthService {
     const body = {
       email: emailData,
     };
-    console.log(url, body);
-    
+      
     return lastValueFrom(this.http.post(url, body));
   }
 
   public activateAccount(uidb64: string, token: string) {
-    console.log(uidb64);
-    console.log(token);
-    
-    
     const url = environment.baseUrl + `/activate/${uidb64}/${token}/`;
-    console.log(url);
     
     return this.http.get(url).pipe(
       catchError(error => {
@@ -59,6 +53,20 @@ export class AuthService {
         return throwError(error);
       })
     );
+  }
+
+  public updatePassword(uidb64: string, token: string, password: string) {
+    const url = environment.baseUrl + `/reset-password/${uidb64}/${token}/`;
+    
+    const body = {
+      new_password: password,
+      confirm_password: password
+    };
+
+    console.log(url, body);
+    
+      
+    return lastValueFrom(this.http.post(url, body));
   }
 
 }

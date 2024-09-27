@@ -3,7 +3,7 @@ import { MessagesModule } from 'primeng/messages';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { Message } from 'primeng/api';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -21,24 +21,14 @@ export class ForgotPasswordComponent {
   messages: Message[] = [];
   isLoading: boolean = false;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(){
     this.buildForgotPasswordForm();
-          // Subscribe to form's statusChanges to log validity state
-  this.forgotPasswordForm.statusChanges.subscribe(status => {
-    console.log('Form Valid:', this.forgotPasswordForm.valid);
-//     setTimeout(() => {
-//     if (!this.forgotPasswordForm.valid) {
-
-//         this.messages = [
-//           { severity: 'info', detail: `Please enter a valid email` },
-//         ];
-//       }else {
-//         this.messages = []
-// } 
-// }, 5000);
-    });
+  // Subscribe to form's statusChanges to log validity state
+  // this.forgotPasswordForm.statusChanges.subscribe(status => {
+  //   console.log('Form Valid:', this.forgotPasswordForm.valid);
+  //   });
   }
   
   
@@ -50,28 +40,29 @@ export class ForgotPasswordComponent {
 
   async triggerForgotPasswordMail() {
     const email = this.forgotPasswordForm.get('email')?.value
-    console.log("Password reset mail sent to", email);
-    // response = self.client.post('/api/v1/password-reset/', {'email': 'test@example.com'})
     try {
       let resp: any = await this.auth.requestPasswordReset(email);
       console.log(resp);
-      
-      // this.router.navigateByUrl('');
+      this.messages = [
+        { severity: 'info', detail: `${resp.detail}. Please check your emails and follow the instructions to reset your password.` },
+      ];
+      console.log("Password reset mail sent to", email);
+      setTimeout(() => {
+        this.router.navigateByUrl('login');
+      }, 10000);
+
     } catch (e: any) {
       this.displayErrorMessage(e)
     }
-    
   }
 
-  displayErrorMessage(e: any) {
-    console.log(e);
-    
-    if (e.status === 0) {
+  displayErrorMessage(e: any) {    
+    if (e.status === 0 || e.status === 500) {
       console.error(e)
       this.messages = [
         { severity: 'info', detail: `There is a problem with the server (${e.status})` },
       ];}
-    else if (e.status === 403) {
+    else if (e.status === 403 || e.status === 404) {
       this.messages = [
         { severity: 'info', detail: `${e.error.error}` },
       ];
