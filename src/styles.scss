@@ -218,6 +218,16 @@ app-footer {
   width: 100%;
   font-size: var(--lgbody);
   color: var(--whitetext);
+  z-index: 0;
+
+  a {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+      color: var(--mainhover);
+    }
+  }
 }
 
 app-header {

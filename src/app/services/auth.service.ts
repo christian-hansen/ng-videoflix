@@ -41,6 +41,15 @@ export class AuthService {
     return lastValueFrom(this.http.post(url, body));
   }
 
+  public requestUsernameReminder(emailData: string) {
+    const url = environment.baseUrl + '/username-reminder/';
+    const body = {
+      email: emailData,
+    };
+
+    return lastValueFrom(this.http.post(url, body));
+  }
+
   public activateAccount(uidb64: string, token: string) {
     const url = environment.baseUrl + `/activate/${uidb64}/${token}/`;
 

@@ -9,21 +9,21 @@ import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-forgot-password',
+  selector: 'app-forgot-username',
   standalone: true,
   imports: [ButtonModule, FormsModule, ReactiveFormsModule, InputTextModule, MessagesModule, FloatLabelModule, RouterLink, RouterLinkActive],
-  templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.scss'
+  templateUrl: './forgot-username.component.html',
+  styleUrl: './forgot-username.component.scss'
 })
-export class ForgotPasswordComponent {
-  forgotPasswordForm!: FormGroup;
+export class ForgotUsernameComponent {
+  forgotUsernameForm!: FormGroup;
   messages: Message[] = [];
   isLoading: boolean = false;
 
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(){
-    this.buildForgotPasswordForm();
+    this.buildForgotUsernameForm();
   // Subscribe to form's statusChanges to log validity state
   // this.forgotPasswordForm.statusChanges.subscribe(status => {
   //   console.log('Form Valid:', this.forgotPasswordForm.valid);
@@ -31,21 +31,21 @@ export class ForgotPasswordComponent {
   }
   
   
-  buildForgotPasswordForm() {
-    this.forgotPasswordForm = new FormGroup({
+  buildForgotUsernameForm() {
+    this.forgotUsernameForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
   });
   }
 
-  async triggerForgotPasswordMail() {
-    const email = this.forgotPasswordForm.get('email')?.value
+  async triggerForgotUsernameMail() {
+    const email = this.forgotUsernameForm.get('email')?.value
     try {
-      let resp: any = await this.auth.requestPasswordReset(email);
+      let resp: any = await this.auth.requestUsernameReminder(email);
       console.log(resp);
       this.messages = [
-        { severity: 'info', detail: `${resp.detail}. Please check your emails and follow the instructions to reset your password.` },
+        { severity: 'info', detail: `${resp.detail}. Please check your emails.` },
       ];
-      console.log("Password reset mail sent to", email);
+      console.log("Username reminder mail sent to", email);
       setTimeout(() => {
         this.router.navigateByUrl('login');
       }, 10000);
@@ -72,5 +72,4 @@ export class ForgotPasswordComponent {
       ];}
     this.isLoading = false;
     }
-
 }

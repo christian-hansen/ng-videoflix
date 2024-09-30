@@ -1,7 +1,7 @@
 <div class="login">
     <div class="login-card">
       <div class="flex-column gap-lg align-center text-center">
-        <h2>Forgot password?</h2>
+        <h2>Forgot username?</h2>
         <p-messages
           [(value)]="messages"
           [showTransitionOptions]="'500ms'"
@@ -9,7 +9,7 @@
           [enableService]="false"
           [closable]="false"
         />
-        <form (ngSubmit)="triggerForgotPasswordMail()" [formGroup]="forgotPasswordForm">
+        <form (ngSubmit)="triggerForgotUsernameMail()" [formGroup]="forgotUsernameForm">
           <div class="form-row">
             <p-floatLabel>
               <input
@@ -29,7 +29,7 @@
           icon="pi pi-chevron-right"
           iconPos="right"
           [loading]="isLoading"
-          [disabled]="!forgotPasswordForm.valid"
+          [disabled]="!forgotUsernameForm.valid"
           [rounded]="true"
           severity="primary"
           label="Send email"
@@ -38,7 +38,7 @@
           />
         </form>
         <div class="form-row">
-            <a routerLink="/forgot-username" routerLinkActive="active">Forgot your username?</a>
+            <a routerLink="/forgot-password" routerLinkActive="active">Forgot your password?</a>
         </div>
       </div>
     </div>

@@ -28,8 +28,8 @@ export class HeaderComponent {
     this.router.navigate(['login'])
   }
 
-  isHideLoginButtonRoute(): boolean {
-    const routesToHide = ['/register', '/'];  // Routes where the login button should be hidden
-    return routesToHide.includes(this.currentRoute);
+  isShowLoginButtonRoute(): boolean {
+    const routesToShow = ['/register', '/', '/forgot-password', '/forgot-username', '/activate', '/reset-password', '/register-success'];  // Routes where the login button should not be hidden
+    return routesToShow.includes(this.currentRoute);
   }
 }
