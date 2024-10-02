@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ import { ButtonModule } from 'primeng/button';
 export class HeaderComponent {
   currentRoute!: string;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
@@ -29,13 +30,24 @@ export class HeaderComponent {
     this.router.navigate(['login'])
   }
 
+  logout() {
+    this.auth.logout().then(() => {
+      this.router.navigateByUrl('/');
+    });
+  }
+
   isShowLoginButtonRoute(): boolean {
     const routesToShow = ['/register', '/', '/forgot-password', '/forgot-username', '/activate', '/reset-password', '/register-success'];  // Routes where the login button should not be hidden
     return routesToShow.includes(this.currentRoute);
   }
 
+  isShowLogoutButtonRoute(): boolean {
+    const routesToShow = ['/videos'];  // Routes where the login button should not be hidden
+    return routesToShow.includes(this.currentRoute);
+  }
+
   public isBlackBackgroundRoute(): boolean {
-    const routesToShowBlackBackground = ['/imprint', '/privacy'];  // Routes where the login button should not be hidden
+    const routesToShowBlackBackground = ['/imprint', '/privacy', '/videos'];  // Routes where the login button should not be hidden
     return routesToShowBlackBackground.includes(this.currentRoute);
   }
 }

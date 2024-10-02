@@ -21,7 +21,7 @@ export class FooterComponent {
   }
 
   public isBlackBackgroundRoute(): boolean {
-    const routesToShowBlackBackground = ['/imprint', '/privacy'];  // Routes where the login button should not be hidden
+    const routesToShowBlackBackground = ['/imprint', '/privacy', '/videos'];  // Routes where the login button should not be hidden
     return routesToShowBlackBackground.includes(this.currentRoute);
   }
 }

@@ -8,4 +8,12 @@
   (click)="login()"
 />
 }
+@if (isShowLogoutButtonRoute()) {
+<p-button
+  label="Log out"
+  [rounded]="true"
+  severity="primary"
+  (click)="logout()"
+/>
+}
 </header>

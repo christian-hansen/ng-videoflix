@@ -13,10 +13,6 @@ export class VideosComponent {
 
 constructor(private auth: AuthService, private router: Router) {}
 
-logout() {
-  this.auth.logout().then(() => {
-    this.router.navigateByUrl('/');
-  });
-}
+
 
 }
