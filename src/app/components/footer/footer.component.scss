@@ -1,11 +1,21 @@
 footer {
-  position: absolute;
-  bottom: 20px;
-  padding: 10px;
-  width: 65%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  padding: 32px;
+  // gap: 128px;
+  font-size: var(--lgbody);
+  color: var(--whitetext);
+  // width: 100%;
+
+  a {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+      color: var(--mainhover);
+    }
+  }
 }
 
 @media (max-width: 300px) {

@@ -1,2 +1,19 @@
-<div style="color: white; font-size: 32px">VIDEOFLIX</div>
-<p-button label="Log in" [rounded]="true" severity="primary" (click)="login()" />
+<header class="background" [ngClass]="{ 'header-bg' : isBlackBackgroundRoute() }" >
+<div class="logo" (click)="directToHome()">VIDEOFLIX</div>
+@if (isShowLoginButtonRoute()) {
+<p-button
+  label="Log in"
+  [rounded]="true"
+  severity="primary"
+  (click)="login()"
+/>
+}
+@if (isShowLogoutButtonRoute()) {
+<p-button
+  label="Log out"
+  [rounded]="true"
+  severity="primary"
+  (click)="logout()"
+/>
+}
+</header>

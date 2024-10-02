@@ -4,21 +4,32 @@
     <div class="starttext">Watch whenever you want wherever you want</div>
     <div class="formtext">Enter your email to create or login to your account</div>
     <div>
+            
+    <p-messages
+    [(value)]="errors"
+    [showTransitionOptions]="'500ms'"
+    [hideTransitionOptions]="'500ms'"
+    [enableService]="false"
+    [closable]="true"/>
+
       <input
         type="email"
         pInputText
         placeholder="Email Address"
         [(ngModel)]="enteredEmail"
+        pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$"
       />
   
     </div>
+
+
     <p-button
       label="Sign Up"
       icon="pi pi-chevron-right"
       iconPos="right"
       [rounded]="true"
       severity="primary"
-      (click)="forwardEmail()"
+      (click)="forwardEmailToSignUp()"
     />
   </div>
 </div>

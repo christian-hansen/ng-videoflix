@@ -7,75 +7,88 @@ import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { MessagesModule } from 'primeng/messages';
 import { CheckboxModule } from 'primeng/checkbox';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { Message } from 'primeng/api';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ButtonModule, FormsModule, InputTextModule, CardModule, PasswordModule, ReactiveFormsModule, MessagesModule, CheckboxModule],
+  imports: [ButtonModule, FormsModule, InputTextModule, CardModule, PasswordModule, ReactiveFormsModule, MessagesModule, CheckboxModule, FloatLabelModule, RouterLink, RouterLinkActive],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  
-loginForm!: FormGroup;
 isLoading: boolean = false;
-isCookieSet: boolean = false;
+// public isCookieSet: boolean = false;
+loginForm!: FormGroup;
 messages: Message[] = [];
 
-constructor(private data:DataService) {
+constructor(private data:DataService, private router: Router, private auth: AuthService) {
 
 }
 
 ngOnInit(){
   this.buildLoginForm();
-  // this.email = this.data.email;
 }
 
 buildLoginForm() {
   this.loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     setCookie: new FormControl<string | null>(null)
 });
+  this.watchSetCookieChanges();
 }
 
-test() {
-    const email = this.loginForm.get('email')?.value;
-    const password = this.loginForm.get('password')?.value;
-    console.log('Email:', email);
-    console.log('Password:', password);
-    this.data.email = email;
-    console.log("this.data.email", this.data.email);
-    let error = {
-      status: 'Status', 
-      error: {
-non_field_errors: 'Non field error'}
+  async login() {
+    this.isLoading = true;
+    let loginFormData = {
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password,
+    };
+
+    try {
+      let resp: any = await this.auth.loginWithUsernameAndPassword(loginFormData);
+      if (resp.token) {
+        localStorage.setItem('token', resp.token);
+        this.router.navigateByUrl('/videos');
       }
-    this.displayErrorMessage(error)
-    
+    } catch (e: any) {
+      this.displayErrorMessage(e)
+    }
   }
 
-setCookie() {
-  const currentValue = this.loginForm.get('setCookie')?.value;
-  if (currentValue) {
-    console.log("Cookie set");
-  } else {
-    console.log('Cookie not set');
-    
+  watchSetCookieChanges() {
+    this.loginForm.get('setCookie')?.enable;
+    this.loginForm.get('setCookie')?.valueChanges.subscribe(value => {  
+      if (value[0] === "cookieSet") {
+        console.log("Cookie set");
+        //TODO save cookie
+      } else {
+        console.log("Cookie not set");
+        //TODO clear cookie
+      }
+    });
   }
-  
-}
 
   displayErrorMessage(e: any) {
+    console.log(e);
+    
     if (e.status === 0) {
       console.error(e)
       this.messages = [
-        { severity: 'error', detail: `There is a problem with the server (${e.status})` },
+        { severity: 'info', detail: `There is a problem with the server (${e.status})` },
       ];}
+    else if (e.status === 403 || e.status === 400) {
+      this.messages = [
+        { severity: 'info', detail: `${e.error.error}` },
+      ];
+    }
     else {
       this.messages = [
-        { severity: 'error', detail: `${e.error.non_field_errors} (${e.status})` },
+        { severity: 'info', detail: `${e.error.non_field_errors} (${e.status})` },
       ];}
     this.isLoading = false;
     }

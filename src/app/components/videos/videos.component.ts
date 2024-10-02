@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-videos',
@@ -8,5 +10,9 @@ import { Component } from '@angular/core';
   styleUrl: './videos.component.scss'
 })
 export class VideosComponent {
+
+constructor(private auth: AuthService, private router: Router) {}
+
+
 
 }

@@ -1,0 +1,108 @@
+<div class="login">
+    <div class="login-card">
+        <div class="flex-column gap-md align-center text-center">
+        <h2>Sign Up</h2>
+  
+        <p-messages
+          [(value)]="messages"
+          [showTransitionOptions]="'500ms'"
+          [hideTransitionOptions]="'500ms'"
+          [enableService]="false"
+          [closable]="false"
+        />
+  
+        <form (ngSubmit)="register()" [formGroup]="registerForm">
+          <div class="form-row">
+            <p-floatLabel>
+              <input
+                type="text"
+                pInputText
+                name="username"
+                required
+                placeholder="Enter Username"
+                formControlName="username"
+              />
+              <label for="username">Username</label>
+            </p-floatLabel>
+          </div>
+          <div class="form-row">
+            <p-floatLabel>
+              <input
+                type="text"
+                pInputText
+                name="first_name"
+                required
+                placeholder="Enter First Name"
+                formControlName="first_name"
+              />
+              <label for="first_name">First Name</label>
+            </p-floatLabel>
+          </div>
+          <div class="form-row">
+            <p-floatLabel>
+              <input
+                type="text"
+                pInputText
+                name="last_name"
+                required
+                placeholder="Enter Last Name"
+                formControlName="last_name"
+              />
+              <label for="last_name">Last Name</label>
+            </p-floatLabel>
+          </div>
+          <div class="form-row">
+            <p-floatLabel>
+              <input
+                type="email"
+                pAutoFocus 
+                [autofocus]="isEmailAdressDefined()"
+                pInputText
+                name="email"
+                required
+                placeholder="Enter E-Mail"
+                formControlName="email"
+                pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$"
+              />
+              <label for="email">E-Mail</label>
+            </p-floatLabel>
+          </div>
+          <div class="form-row">
+            <p-floatLabel>
+              <p-password
+                name="password"
+                [feedback]="true"
+                required
+                placeholder="Enter Password"
+                formControlName="password"
+                [toggleMask]="true"
+              />
+              <label for="password">Password</label>
+            </p-floatLabel>
+          </div>
+          <div class="form-row">
+            <p-floatLabel>
+              <p-password
+                name="password_repeat"
+                [feedback]="false"
+                required
+                placeholder="Repeat Password"
+                formControlName="password_repeat"
+                [toggleMask]="true"
+              />
+              <label for="password_repeat">Repeat Password</label>
+            </p-floatLabel>
+            </div>
+
+          <p-button
+            icon="pi pi-check"
+            [loading]="isLoading"
+            [disabled]="!registerForm.valid"
+            label="Submit"
+            type="submit"
+            [class]="{ width: '100%' }"
+          />
+        </form>
+      </div>
+  </div>
+</div>

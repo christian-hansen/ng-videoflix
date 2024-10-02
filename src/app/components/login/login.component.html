@@ -1,6 +1,6 @@
 <div class="login">
   <div class="login-card">
-    <div class="flex-column gap-md align-center text-center">
+    <div class="flex-column gap-lg align-center text-center">
       <h2>Log In</h2>
       <p-messages
         [(value)]="messages"
@@ -9,57 +9,61 @@
         [enableService]="false"
         [closable]="false"
       />
-      <form (ngSubmit)="test()" [formGroup]="loginForm">
+      <form (ngSubmit)="login()" [formGroup]="loginForm">
         <div class="form-row">
-          <input
-            type="text"
-            pInputText
-            name="email"
-            placeholder="E-Mail Address"
-            formControlName="email"
-            required
-          />
+          <p-floatLabel>
+            <input
+              type="text"
+              pInputText
+              name="username"
+              placeholder="Enter Username"
+              formControlName="username"
+              required
+            />
+            <label for="username">Username</label>
+          </p-floatLabel>
         </div>
         <div class="form-row">
-          <p-password
-            name="password"
-            placeholder="Password"
-            formControlName="password"
-            [feedback]="false"
-            [toggleMask]="true"
-            required
-          />
+          <p-floatLabel>
+            <p-password
+              name="password"
+              placeholder="Enter Password"
+              formControlName="password"
+              [feedback]="false"
+              [toggleMask]="true"
+              required
+            />
+            <label for="password">Password</label>
+          </p-floatLabel>
         </div>
 
-        <div class="form-row">
+        <!-- <div class="form-row">
           <div class="checkbox-container">
             <p-checkbox
-              formControlName="setCookie"
-              [binary]="isCookieSet"
-              [disabled]="isLoading"
-              (onChange)="setCookie()"
-              inputId="binary"
+            formControlName="setCookie"
+            value="cookieSet"
+            inputId="binary"
             />
             <label for="binary">Remember me</label>
           </div>
-        </div>
+        </div> -->
         <p-button
-            icon="pi pi-chevron-right"
+        icon="pi pi-chevron-right"
         iconPos="right"
-          [loading]="isLoading"
-          [disabled]="!loginForm.valid"
-          [rounded]="true"
-          severity="primary"
-          label="Log In"
-          type="submit"
-          [class]="{ width: '100%' }"
+        [loading]="isLoading"
+        [disabled]="!loginForm.valid"
+        [rounded]="true"
+        severity="primary"
+        label="Log In"
+        type="submit"
+        [class]="{ width: '100%' }"
         />
       </form>
-      <div>Forgot Password?</div>
+      <a routerLink="/forgot-password" routerLinkActive="active">Forgot Password?</a>
       <div class="form-row">
         <div class="bottom">
           <div>New to Videoflix?</div>
-          <div>Sign Up now</div>
+          <a routerLink="/register" routerLinkActive="active">Sign Up now</a>
         </div>
       </div>
     </div>
