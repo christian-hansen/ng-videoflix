@@ -1,46 +1,69 @@
 .videos-container {
-    position: relative;
-    min-height: 100vh;
-    background-size: auto;
-    background-attachment: fixed;
-    z-index: 0;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    background-color: black;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 96px 5%;
-    gap: 32px;
-    width: 100%;
-
-    }
+  position: relative;
+  min-height: 100vh;
+  background-size: auto;
+  background-attachment: fixed;
+  z-index: 0;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 96px 5%;
+  gap: 32px;
+  width: 100%;
+}
 
 .section-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
 
-    h2 {
-     font-size: var(--start);
-    }
-    max-width: 100%;
+  h2 {
+    font-size: var(--start);
+  }
 }
 
 .video-row-container {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  transform: rotate(0deg);
+  cursor: pointer;
 
+  &::-webkit-scrollbar {
+    display: none;
+    // width: 0;  /* Remove scrollbar space */
+    // background: transparent;  /* Optional: just make scrollbar invisible */
+  }
+
+  // &::-webkit-scrollbar-thumb {
+  //     background: #FF0000;
+  // }
 }
 
-.video-row-container::-webkit-scrollbar { display: none; }
-
 .video-item {
-min-width: 160px;
-height: 96px;
-background-image: url(/assets/img/start.jpeg);
-background-position: center;
-background-size: cover;
-background-repeat: no-repeat;
+  min-width: 212px;
+  height: 120px;
+
+  background-image: url(/assets/img/start.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: rotate(0deg);
+}
+
+@media (max-width: 400px) {
+  .video-row-container {
+    gap: 16px;
+  }
+
+  .video-item {
+    min-width: 160px;
+    height: 96px;
+  }
 }
