@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment.development';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  public loginWithUsernameAndPassword(loginFormData: any) {
+  public async loginWithUsernameAndPassword(loginFormData: any) {
     const url = environment.baseUrl + '/login/';
     const body = {
       username: loginFormData.username,
@@ -17,6 +17,17 @@ export class AuthService {
     };
 
     return lastValueFrom(this.http.post(url, body));
+  }
+
+  public isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  public logout(): Promise<void> {
+    return new Promise((resolve) => {
+      localStorage.removeItem('token');
+      resolve();
+    });
   }
 
   public registerWithUsernameAndPassword(registerFormData: any) {

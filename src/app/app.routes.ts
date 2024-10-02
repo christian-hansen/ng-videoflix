@@ -9,17 +9,18 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { StaticImprintComponent } from './components/static-imprint/static-imprint.component';
 import { ActivateComponent } from './components/activate/activate.component';
 import { ForgotUsernameComponent } from './components/forgot-username/forgot-username.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    { path: '', component: StartComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'register-success', component: RegisterSuccessComponent },
-    { path: 'activate/:id/:token', component: ActivateComponent },
-    { path: 'forgot-password', component: ForgotPasswordComponent },
-    { path: 'forgot-username', component: ForgotUsernameComponent },
-    { path: 'reset-password/:id/:token', component: ResetPasswordComponent },
-    { path: 'videos', component: VideosComponent },
-    { path: 'imprint', component: StaticImprintComponent },
-    { path: 'privacy', component: StaticImprintComponent },
+  { path: '', component: StartComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'register-success', component: RegisterSuccessComponent },
+  { path: 'activate/:id/:token', component: ActivateComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'forgot-username', component: ForgotUsernameComponent },
+  { path: 'reset-password/:id/:token', component: ResetPasswordComponent },
+  { path: 'videos', component: VideosComponent, canActivate: [AuthGuard] },
+  { path: 'imprint', component: StaticImprintComponent },
+  { path: 'privacy', component: StaticImprintComponent },
 ];

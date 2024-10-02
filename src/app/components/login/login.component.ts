@@ -51,8 +51,10 @@ buildLoginForm() {
 
     try {
       let resp: any = await this.auth.loginWithUsernameAndPassword(loginFormData);
-      localStorage.setItem('token', resp.token);
-      this.router.navigateByUrl('/videos');
+      if (resp.token) {
+        localStorage.setItem('token', resp.token);
+        this.router.navigateByUrl('/videos');
+      }
     } catch (e: any) {
       this.displayErrorMessage(e)
     }
@@ -79,7 +81,7 @@ buildLoginForm() {
       this.messages = [
         { severity: 'info', detail: `There is a problem with the server (${e.status})` },
       ];}
-    else if (e.status === 403) {
+    else if (e.status === 403 || e.status === 400) {
       this.messages = [
         { severity: 'info', detail: `${e.error.error}` },
       ];
