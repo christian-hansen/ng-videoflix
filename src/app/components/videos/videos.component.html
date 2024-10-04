@@ -4,8 +4,13 @@
             New on Videoflix
         </h2>
         <div class="video-row-container">
-            <div class="video-item" style="background-image: url(http://localhost:8000/media/thumbnails/1000_F_168252903_ehZkcpyr6cJdmQHPx32Uaz4xvuQDdQy8.jpg);"></div>
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
+            <div *ngFor="let video of videos" 
+            class="video-item" 
+            [ngStyle]="video.thumbnail_file ? {'background-image': 'url(' + baseURL + video.thumbnail_file + ')'} : {}" 
+            (click)="loadVideo(video)">
+       </div>
+            <!-- 
+            <div class="video-item"></div>
             <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
             <div class="video-item"></div>
             <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
@@ -13,29 +18,32 @@
             <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
             <div class="video-item"></div>
             <div class="video-item"></div>
-            <div class="video-item"></div>
+            <div class="video-item"></div> 
+            -->
         </div>
     </div>
-    <div class="section-container">
-        <h2>
-            Documentary
-        </h2>
+    <!-- Section 2: Documentary videos -->
+    <div class="section-container" *ngIf="videosDocumentaries.length">
+        <h2>Documentaries</h2>
         <div class="video-row-container">
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item"></div>
+            <div *ngFor="let video of videosDocumentaries" 
+                 class="video-item" 
+                 [ngStyle]="video.thumbnail_file ? {'background-image': 'url(' + baseURL + video.thumbnail_file + ')'} : {}" 
+                 (click)="loadVideo(video)">
+            </div>
         </div>
     </div>
-    <div class="section-container">
-        <h2>
-            Music
-        </h2>
+
+    <!-- Section 3: Music videos -->
+    <div class="section-container" *ngIf="videosMusic.length">
+        <h2>Music Videos</h2>
         <div class="video-row-container">
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item"></div>
+            <div *ngFor="let video of videosMusic" 
+                 class="video-item" 
+                 [ngStyle]="video.thumbnail_file ? {'background-image': 'url(' + baseURL + video.thumbnail_file + ')'} : {}" 
+                 (click)="loadVideo(video)">
+            </div>
         </div>
     </div>
 </div>
+   

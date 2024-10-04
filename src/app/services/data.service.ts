@@ -1,11 +1,32 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
   email!: string;
   username!: string;
-  
-  constructor() { }
+
+  private videosUrl = environment.baseUrl + '/videos/'; // API base URL
+  private authToken = 'Token ' + localStorage.getItem('token');
+
+  constructor(private http: HttpClient) {}
+
+  private setHeaders() {
+    return new HttpHeaders().set('Authorization', this.authToken);
+  }
+
+  private handleError(error: any) {
+    console.error('Error:', error);
+    return throwError(error);
+  }
+  //Load all videos
+  loadVideos(): Observable<any> {
+    return this.http
+      .get<any>(this.videosUrl, { headers: this.setHeaders() })
+      .pipe(catchError(this.handleError));
+  }
 }
