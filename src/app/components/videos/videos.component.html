@@ -3,8 +3,8 @@
   <div class="section-container">
     <h2>New on Videoflix</h2>
     <div class="video-row-container">
+      @for (video of videos; track video) {
       <div
-        *ngFor="let video of videos"
         class="video-item"
         [ngStyle]="
           video.thumbnail_file
@@ -16,27 +16,28 @@
         "
         (click)="loadVideo(video)"
       ></div>
-      <!-- 
-            <div class="video-item"></div>
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item"></div>
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div> 
-            -->
+      }
+      <!-- <div class="video-item"></div>
+          <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
+          <div class="video-item"></div>
+          <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
+          <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
+          <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
+          <div class="video-item"></div>
+          <div class="video-item"></div>
+          <div class="video-item"></div>  -->
     </div>
   </div>
 
   <!-- Dynamic genre sections -->
-  <div class="section-container" *ngFor="let genre of genres">
+  @for (genre of genres; track genre) {
+  <div class="section-container">
     @if (filterVideosByGenre(genre).length > 0) {
     <h2>{{ genre }}</h2>
     <div class="video-row-container">
+      @for (video of filterVideosByGenre(genre); track video) {
+
       <div
-        *ngFor="let video of filterVideosByGenre(genre)"
         class="video-item"
         [ngStyle]="
           video.thumbnail_file
@@ -48,7 +49,9 @@
         "
         (click)="loadVideo(video)"
       ></div>
+      }
     </div>
     }
   </div>
+  }
 </div>

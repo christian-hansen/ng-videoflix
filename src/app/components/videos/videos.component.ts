@@ -12,8 +12,7 @@ import { CommonModule } from '@angular/common';
 export class VideosComponent {
   isLoading: boolean = false;
   videos: any[] = [];
-  genres: string[] = [];
-  genre1: any[] = [];
+  public genres: string[] = [];
   public baseURL: string = 'http://localhost:8000';
 
   constructor(private dataService: DataService) {}
