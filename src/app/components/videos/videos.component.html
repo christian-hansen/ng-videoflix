@@ -1,15 +1,22 @@
 <div class="videos-container">
-    <div class="section-container">
-        <h2>
-            New on Videoflix
-        </h2>
-        <div class="video-row-container">
-            <div *ngFor="let video of videos" 
-            class="video-item" 
-            [ngStyle]="video.thumbnail_file ? {'background-image': 'url(' + baseURL + video.thumbnail_file + ')'} : {}" 
-            (click)="loadVideo(video)">
-       </div>
-            <!-- 
+  <!-- First section that includes all videos. -->
+  <div class="section-container">
+    <h2>New on Videoflix</h2>
+    <div class="video-row-container">
+      <div
+        *ngFor="let video of videos"
+        class="video-item"
+        [ngStyle]="
+          video.thumbnail_file
+            ? {
+                'background-image':
+                  'url(' + baseURL + video.thumbnail_file + ')'
+              }
+            : {}
+        "
+        (click)="loadVideo(video)"
+      ></div>
+      <!-- 
             <div class="video-item"></div>
             <div class="video-item" style="background-image: url(/assets/img/video1.jpeg);"></div>
             <div class="video-item"></div>
@@ -20,30 +27,28 @@
             <div class="video-item"></div>
             <div class="video-item"></div> 
             -->
-        </div>
     </div>
-    <!-- Section 2: Documentary videos -->
-    <div class="section-container" *ngIf="videosDocumentaries.length">
-        <h2>Documentaries</h2>
-        <div class="video-row-container">
-            <div *ngFor="let video of videosDocumentaries" 
-                 class="video-item" 
-                 [ngStyle]="video.thumbnail_file ? {'background-image': 'url(' + baseURL + video.thumbnail_file + ')'} : {}" 
-                 (click)="loadVideo(video)">
-            </div>
-        </div>
-    </div>
+  </div>
 
-    <!-- Section 3: Music videos -->
-    <div class="section-container" *ngIf="videosMusic.length">
-        <h2>Music Videos</h2>
-        <div class="video-row-container">
-            <div *ngFor="let video of videosMusic" 
-                 class="video-item" 
-                 [ngStyle]="video.thumbnail_file ? {'background-image': 'url(' + baseURL + video.thumbnail_file + ')'} : {}" 
-                 (click)="loadVideo(video)">
-            </div>
-        </div>
+  <!-- Dynamic genre sections -->
+  <div class="section-container" *ngFor="let genre of genres">
+    @if (filterVideosByGenre(genre).length > 0) {
+    <h2>{{ genre }}</h2>
+    <div class="video-row-container">
+      <div
+        *ngFor="let video of filterVideosByGenre(genre)"
+        class="video-item"
+        [ngStyle]="
+          video.thumbnail_file
+            ? {
+                'background-image':
+                  'url(' + baseURL + video.thumbnail_file + ')'
+              }
+            : {}
+        "
+        (click)="loadVideo(video)"
+      ></div>
     </div>
+    }
+  </div>
 </div>
-   

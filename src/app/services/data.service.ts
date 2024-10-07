@@ -11,6 +11,7 @@ export class DataService {
   username!: string;
 
   private videosUrl = environment.baseUrl + '/videos/'; // API base URL
+  private genresUrl = environment.baseUrl + '/genres/'; // API base URL
   private authToken = 'Token ' + localStorage.getItem('token');
 
   constructor(private http: HttpClient) {}
@@ -27,6 +28,13 @@ export class DataService {
   loadVideos(): Observable<any> {
     return this.http
       .get<any>(this.videosUrl, { headers: this.setHeaders() })
+      .pipe(catchError(this.handleError));
+  }
+
+  //Load all genres
+  loadGenres(): Observable<any> {
+    return this.http
+      .get<any>(this.genresUrl, { headers: this.setHeaders() })
       .pipe(catchError(this.handleError));
   }
 }

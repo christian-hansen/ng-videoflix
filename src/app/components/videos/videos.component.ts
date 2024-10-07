@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
 
@@ -14,19 +12,24 @@ import { CommonModule } from '@angular/common';
 export class VideosComponent {
   isLoading: boolean = false;
   videos: any[] = [];
-  videosDocumentaries: any[] = [];
-  videosMusic: any[] = [];
-  public baseURL: string = "http://localhost:8000"
+  genres: string[] = [];
+  genre1: any[] = [];
+  public baseURL: string = 'http://localhost:8000';
 
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-    private dataService: DataService
-  ) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
+    this.loadGenres();
     this.loadVideos();
+  }
 
+  loadGenres() {
+    this.isLoading = true;
+    this.dataService.loadGenres().subscribe((genres: any[]) => {
+      this.genres = genres.map((genre) => genre.name); // Extract the name of each genre
+      console.log('this.genres', this.genres);
+      this.isLoading = false;
+    });
   }
 
   loadVideos() {
@@ -34,23 +37,16 @@ export class VideosComponent {
     this.dataService.loadVideos().subscribe((videos: any[]) => {
       this.videos = videos;
       console.log('this.videos', this.videos);
-      this.filterVideosByGenre();
       this.isLoading = false;
     });
   }
 
-  public loadVideo(id: any) {
-    console.log(id);
-    //TODO
+  filterVideosByGenre(genre: string): any[] {
+    return this.videos.filter((video) => video.genre === genre);
   }
 
-  filterVideosByGenre(): void {
-    // Filter videos by genre
-    this.videosDocumentaries = this.videos.filter(video => video.genre === 'Documentary');
-    console.log(this.videosDocumentaries);
-    
-    this.videosMusic = this.videos.filter(video => video.genre === 'Music');
-    console.log(this.videosMusic);
-    
+  public loadVideo(id: number) {
+    console.log('Loading video with ID:', id);
+    // TODO Implement video loading logic here
   }
 }
