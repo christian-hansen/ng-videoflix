@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -15,13 +15,15 @@ export class VideosComponent {
   videos: any[] = [];
   public genres: string[] = [];
   public baseURL: string = 'http://localhost:8000';
-  selectedvideo: any;
+  selectedVideo: any;
+  prevSelectedVideo: any;
 
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.loadGenres();
-    this.loadVideos();
+    this.loadVideos();    
+    this.checkScreenWidth();
   }
 
 
@@ -42,8 +44,8 @@ export class VideosComponent {
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
       console.log('this.videos', this.videos);
-      this.selectedvideo = this.videos[0]
-      console.log("this.selectedvideo", this.selectedvideo);
+      this.selectVideo(this.videos[0])
+      console.log("this.selectedvideo", this.selectedVideo);
       
       this.isLoading = false;
     });
@@ -55,6 +57,39 @@ export class VideosComponent {
 
   public loadVideo(video: any) {
     console.log('Selected video with ID:', video);
-    this.selectedvideo = video
+    this.selectVideo(video)
+  }
+
+  loadVideoPlayer(video: any) {
+    console.log(video);
+    //TODO load video into videoplayer
+  }
+
+  closeSelectedVideo() {
+    this.selectedVideo = undefined;
+    console.log(this.selectedVideo);
+    }
+
+  selectVideo(video:any) {
+    this.selectedVideo = video;
+    this.prevSelectedVideo = video;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.checkScreenWidth();
+  }
+
+  checkScreenWidth(): void {
+    const screenWidth = window.innerWidth;
+    if (screenWidth > 400) {
+      this.reloadPrevSelectedVideo();
+    }
+  }
+
+  reloadPrevSelectedVideo(): void {
+    if(this.selectedVideo === undefined) {
+      this.selectVideo(this.prevSelectedVideo)      
+    } 
   }
 }

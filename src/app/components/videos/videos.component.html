@@ -1,29 +1,29 @@
 <div class="videos-container">
-  @if (selectedvideo) {
+  @if (selectedVideo) {
   <div class="hero-container">
-    <div class="selected-video">
-      @if (selectedvideo.video_file) {
-
+      <div class="selected-video">
+        <p-button icon="pi pi-times" class="close-btn" [rounded]="true" severity="secondary" (click)="closeSelectedVideo()"/>
+      @if (selectedVideo.video_file) {
       <video
         autoplay
         onloadedmetadata="this.volume = 0.25"
         playsinline
-        [poster]="baseURL + selectedvideo.thumbnail_file"
-        [src]="baseURL + selectedvideo.video_file"
+        [poster]="baseURL + selectedVideo.thumbnail_file"
+        [src]="baseURL + selectedVideo.video_file"
         class="background-video"
       ></video>
       }
       <div class="selected-video-details">
-        <h2>{{ selectedvideo.title }}</h2>
-        <div>{{ selectedvideo.description }}</div>
-        <p-button>Play</p-button>
+        <h2>{{ selectedVideo.title }}</h2>
+        <div>{{ selectedVideo.description }}</div>
+        <p-button label="Play" icon="pi pi-play" [rounded]="true" (click)="loadVideoPlayer(selectedVideo)"/>
       </div>
     </div>
   </div>
   }
-  <div class="hero-mobile-container">
+  <!-- <div class="hero-mobile-container">
     @if (selectedvideo) { Mobile video details }
-  </div>
+  </div> -->
 
   <!-- First section that includes all videos. -->
   <div class="section-container">
