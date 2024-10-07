@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-videos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonModule],
   templateUrl: './videos.component.html',
   styleUrl: './videos.component.scss',
 })
@@ -14,6 +15,7 @@ export class VideosComponent {
   videos: any[] = [];
   public genres: string[] = [];
   public baseURL: string = 'http://localhost:8000';
+  selectedvideo: any;
 
   constructor(private dataService: DataService) {}
 
@@ -21,6 +23,7 @@ export class VideosComponent {
     this.loadGenres();
     this.loadVideos();
   }
+
 
   loadGenres() {
     this.isLoading = true;
@@ -39,6 +42,9 @@ export class VideosComponent {
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
       console.log('this.videos', this.videos);
+      this.selectedvideo = this.videos[0]
+      console.log("this.selectedvideo", this.selectedvideo);
+      
       this.isLoading = false;
     });
   }
@@ -47,8 +53,8 @@ export class VideosComponent {
     return this.videos.filter((video) => video.genre === genre);
   }
 
-  public loadVideo(id: number) {
-    console.log('Loading video with ID:', id);
-    // TODO Implement video loading logic here
+  public loadVideo(video: any) {
+    console.log('Selected video with ID:', video);
+    this.selectedvideo = video
   }
 }

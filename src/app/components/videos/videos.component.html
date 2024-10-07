@@ -1,4 +1,30 @@
 <div class="videos-container">
+  @if (selectedvideo) {
+  <div class="hero-container">
+    <div class="selected-video">
+      @if (selectedvideo.video_file) {
+
+      <video
+        autoplay
+        onloadedmetadata="this.volume = 0.25"
+        playsinline
+        [poster]="baseURL + selectedvideo.thumbnail_file"
+        [src]="baseURL + selectedvideo.video_file"
+        class="background-video"
+      ></video>
+      }
+      <div class="selected-video-details">
+        <h2>{{ selectedvideo.title }}</h2>
+        <div>{{ selectedvideo.description }}</div>
+        <p-button>Play</p-button>
+      </div>
+    </div>
+  </div>
+  }
+  <div class="hero-mobile-container">
+    @if (selectedvideo) { Mobile video details }
+  </div>
+
   <!-- First section that includes all videos. -->
   <div class="section-container">
     <h2>New on Videoflix</h2>
@@ -6,16 +32,11 @@
       @for (video of videos; track video) {
       <div
         class="video-item"
-        [ngStyle]="
-          video.thumbnail_file
-            ? {
-                'background-image':
-                  'url(' + baseURL + video.thumbnail_file + ')'
-              }
-            : {}
-        "
+        [ngStyle]="video.thumbnail_file ? {'background-image' : 'url(' + baseURL + video.thumbnail_file + ')'} : {}"
         (click)="loadVideo(video)"
-      ><h3>{{video.title}}</h3></div>
+      >
+        <h3>{{ video.title }}</h3>
+      </div>
       }
     </div>
   </div>
@@ -30,16 +51,11 @@
 
       <div
         class="video-item"
-        [ngStyle]="
-          video.thumbnail_file
-            ? {
-                'background-image':
-                  'url(' + baseURL + video.thumbnail_file + ')'
-              }
-            : {}
-        "
+        [ngStyle]="video.thumbnail_file ? {'background-image' : 'url(' + baseURL + video.thumbnail_file + ')'} : {}"
         (click)="loadVideo(video)"
-      ><h3>{{video.title}}</h3></div>
+      >
+        <h3>{{ video.title }}</h3>
+      </div>
       }
     </div>
     }
