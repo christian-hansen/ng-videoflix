@@ -35,7 +35,10 @@ export class VideosComponent {
   loadVideos() {
     this.isLoading = true;
     this.dataService.loadVideos().subscribe((videos: any[]) => {
-      this.videos = videos;
+      this.videos = videos.sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
       console.log('this.videos', this.videos);
       this.isLoading = false;
     });
