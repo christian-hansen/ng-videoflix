@@ -2,12 +2,16 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { RippleModule } from 'primeng/ripple';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
   selector: 'app-videoplayer',
   standalone: true,
-  imports: [ButtonModule],
+  imports: [ButtonModule, ToastModule, RippleModule],
+  providers: [MessageService],
   templateUrl: './videoplayer.component.html',
   styleUrl: './videoplayer.component.scss'
 })
@@ -15,6 +19,7 @@ export class VideoplayerComponent {
   videoId: any;
   player: any;
   public baseURL: string = 'http://localhost:8000';
+  qualities = ['360p', '720p', '1080p']; // List of video quality options
   showQualityMenu = false;
   videoData: any = {
     created_at
@@ -49,7 +54,7 @@ export class VideoplayerComponent {
     "/media/videos/scifi01_1080p.mp4"
   }
 
-  constructor(private route: ActivatedRoute, private data: DataService) {}
+  constructor(private route: ActivatedRoute, private data: DataService, private messageService: MessageService) {}
 
   ngOnInit(): void {
     
@@ -57,12 +62,16 @@ export class VideoplayerComponent {
     console.log(this.route.snapshot);
     console.log(this.videoId);
     
-    
+
     this.loadVideoData();
+
   }
 
+  //TODO
   loadVideoData() {
     console.log(this.videoData);
+
+    this.selectQuality(this.qualities[1]); // Pre-select default quality (720p)
   }
 
   openSelectQualityMenu(event: MouseEvent) {
@@ -80,33 +89,33 @@ export class VideoplayerComponent {
   }
 
   selectQuality(option: string) {
-    let selectedQuality: string = "";
-    if (option === '360p') {
-      selectedQuality = this.baseURL + this.videoData.video_file_360p;
-      this.showQualityMenu = false;
-    }
-    if (option === '720p') {
-      selectedQuality = this.baseURL + this.videoData.video_file_720p;
-      this.showQualityMenu = false;
-    }
-    if (option === '1080p') {
-      selectedQuality = this.baseURL + this.videoData.video_file_1080p;
-      this.showQualityMenu = false;
-    }
+    const qualityMap: { [key: string]: string } = {
+      '120p': this.baseURL + this.videoData.video_file_120p,
+      '360p': this.baseURL + this.videoData.video_file_360p,
+      '720p': this.baseURL + this.videoData.video_file_720p,
+      '1080p': this.baseURL + this.videoData.video_file_1080p,
+    };
   
-    console.log(selectedQuality);
-    const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
+    const selectedQuality = qualityMap[option];
   
-    if (videoPlayer) {
-      const currentTime = videoPlayer.currentTime; // Save current playback time
-      videoPlayer.src = selectedQuality;
-      videoPlayer.load();
+    if (selectedQuality) {
+      this.showQualityMenu = false;
+      console.log(selectedQuality);
   
-      // Once the video is loaded, set the current time back and play the video
-      videoPlayer.onloadeddata = () => {
-        videoPlayer.currentTime = currentTime; // Restore the playback time
-        videoPlayer.play(); // Continue playing from the saved position
-      };
+      const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
+  
+      if (videoPlayer) {
+        const currentTime = videoPlayer.currentTime; // Save current playback time
+        videoPlayer.src = selectedQuality;
+        videoPlayer.load();
+        
+        // Once the video is loaded, set the current time back and play the video
+        videoPlayer.onloadeddata = () => {
+          videoPlayer.currentTime = currentTime; // Restore the playback time
+          videoPlayer.play(); // Continue playing from the saved position
+        };
+      }
+      this.showQualityChangeSuccess(option)
     }
   }
 
@@ -115,5 +124,9 @@ export class VideoplayerComponent {
       this.player.dispose();
     }
   }
+
+  showQualityChangeSuccess(input: string) {
+    this.messageService.add({ severity: 'secondary', summary: "Settings updated", detail: `Video quality changed to ${input}` });
+}
 
 }
