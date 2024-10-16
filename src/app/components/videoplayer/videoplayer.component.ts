@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
+import { ButtonModule } from 'primeng/button';
 
 
 @Component({
   selector: 'app-videoplayer',
   standalone: true,
-  imports: [],
+  imports: [ButtonModule],
   templateUrl: './videoplayer.component.html',
   styleUrl: './videoplayer.component.scss'
 })
@@ -14,6 +15,7 @@ export class VideoplayerComponent {
   videoId: any;
   player: any;
   public baseURL: string = 'http://localhost:8000';
+  showQualityMenu = false;
   videoData: any = {
     created_at
     : 
@@ -63,14 +65,33 @@ export class VideoplayerComponent {
     console.log(this.videoData);
   }
 
+  openSelectQualityMenu(event: MouseEvent) {
+    this.showQualityMenu = true;
+    event.stopPropagation(); // Prevents closing the menu immediately
+  }
+
+  onContainerClick(event: MouseEvent) {
+    const clickedElement = event.target as HTMLElement;
+
+    // Check if the click is outside the video-quality-menu
+    if (!clickedElement.closest('.video-quality-menu')) {
+      this.showQualityMenu = false;
+    }
+  }
 
   selectQuality(option: string) {
     let selectedQuality: string = "";
     if (option === '360p') {
       selectedQuality = this.baseURL + this.videoData.video_file_360p;
+      this.showQualityMenu = false;
     }
     if (option === '720p') {
       selectedQuality = this.baseURL + this.videoData.video_file_720p;
+      this.showQualityMenu = false;
+    }
+    if (option === '1080p') {
+      selectedQuality = this.baseURL + this.videoData.video_file_1080p;
+      this.showQualityMenu = false;
     }
   
     console.log(selectedQuality);

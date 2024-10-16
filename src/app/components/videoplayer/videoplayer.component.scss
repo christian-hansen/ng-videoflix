@@ -10,7 +10,11 @@
     background-color: black;
   }
 
-  &:hover .quality-btn {
+  &:hover .video-quality-menu {
+    display: flex;
+  }
+
+  &:hover .video-quality-btn {
     display: block;
   }
 }
@@ -20,13 +24,37 @@
   width: 100%;
 }
 
-.quality-btn {
+.video-quality-menu,
+.video-quality-btn {
   display: none;
-  width: 32px;
-  height: 32px;
-  background-color: lightgray;
+  flex-direction: column;
+  align-items: center;
   position: absolute;
-  bottom: 80px;
-  right: 16px;
+  right: 144px;
+}
+
+.video-quality-menu {
+  background-color: lightgray;
+  width: 64px;
+  bottom: 48px;
+  right: 144px;
+}
+.video-quality-btn {
+  background-color: transparent;
+  width: 48px;
+  bottom: 26px;
+}
+
+.quality-btn {
+  padding: 8px;
+  width: 100%;
+  height: 100%;
+  background-color: lightgray;
+
   text-align: center;
+
+  &:hover {
+    background-color: darkgray;
+    cursor: pointer;
+  }
 }

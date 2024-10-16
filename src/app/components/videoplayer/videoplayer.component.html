@@ -1,4 +1,4 @@
-<div class="video-player-container">
+<div class="video-player-container" (click)="onContainerClick($event)">
   <video
     id="video-player"
     autoplay
@@ -6,5 +6,17 @@
     poster="{{ baseURL + this.videoData.thumbnail_file }}"
     src="{{ baseURL + this.videoData.video_file_720p }}"
   ></video>
-  <button class="quality-btn" (click)="selectQuality('360p')">HD</button>
+  @if (!showQualityMenu) {
+      <div class="video-quality-btn">
+
+          <p-button icon="pi pi-cog" [rounded]="true" [text]="true" severity="secondary" size="large" (click)="openSelectQualityMenu($event)"/>
+      </div>
+  }
+  @else {
+  <div class="video-quality-menu">
+    <div class="quality-btn" (click)="selectQuality('360p')">360p</div>
+    <div class="quality-btn" (click)="selectQuality('720p')">720p</div>
+    <div class="quality-btn" (click)="selectQuality('1080p')">1080p</div>
+</div>
+}
 </div>
