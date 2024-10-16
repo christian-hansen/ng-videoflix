@@ -37,4 +37,8 @@ export class DataService {
       .get<any>(this.genresUrl, { headers: this.setHeaders() })
       .pipe(catchError(this.handleError));
   }
+
+  getVideoById(video: any) {
+    console.log("video.id", video.id);
+  }
 }

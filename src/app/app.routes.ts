@@ -10,6 +10,7 @@ import { StaticImprintComponent } from './components/static-imprint/static-impri
 import { ActivateComponent } from './components/activate/activate.component';
 import { ForgotUsernameComponent } from './components/forgot-username/forgot-username.component';
 import { AuthGuard } from './guards/auth.guard';
+import { VideoplayerComponent } from './components/videoplayer/videoplayer.component';
 
 export const routes: Routes = [
   { path: '', component: StartComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'forgot-username', component: ForgotUsernameComponent },
   { path: 'reset-password/:id/:token', component: ResetPasswordComponent },
   { path: 'videos', component: VideosComponent, canActivate: [AuthGuard] },
+  { path: 'videos/:videoId', component: VideoplayerComponent, canActivate: [AuthGuard] },
   { path: 'imprint', component: StaticImprintComponent },
   { path: 'privacy', component: StaticImprintComponent },
 ];

@@ -1,0 +1,10 @@
+<div class="video-player-container">
+  <video
+    id="video-player"
+    autoplay
+    controls
+    poster="{{ baseURL + this.videoData.thumbnail_file }}"
+    src="{{ baseURL + this.videoData.video_file_720p }}"
+  ></video>
+  <button class="quality-btn" (click)="selectQuality('360p')">HD</button>
+</div>
