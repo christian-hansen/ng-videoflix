@@ -39,11 +39,16 @@ export class DataService {
   }
 
   getVideoById(id: number): Observable<any> {
-    let singleVideoUrl = this.videosUrl + id;
-    console.log("singleVideoUrl", singleVideoUrl);
+    console.log("Load single video");
     
+    let singleVideoUrl = this.videosUrl + id;    
     return this.http
       .get<any>(singleVideoUrl, { headers: this.setHeaders() })
       .pipe(catchError(this.handleError));
+  }
+
+  saveVideoTimePlayed(time: string) {
+    let timePlayed = time;
+    console.log(timePlayed) //TODO store in database
   }
 }

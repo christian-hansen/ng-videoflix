@@ -6,6 +6,7 @@ import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import { debounceTime, fromEvent } from 'rxjs';
 
 
 @Component({
@@ -26,17 +27,12 @@ export class VideoplayerComponent {
   currentScreenWidthRange: string = ''; // To track the current screen width range
   videoData: any;
   isLoading: boolean = false;
+  initialLoad: boolean = true;
 
   constructor(private route: ActivatedRoute, private data: DataService, private messageService: MessageService, private router: Router) {}
 
-  // Listen to the window resize event
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.screenWidth = window.innerWidth;
-    this.checkScreenWidth();
-  }
-
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.addScreenWidthResizeListening();
     this.videoId = this.route.snapshot.paramMap.get('videoId');
     this.loadVideoData(this.videoId);
   }
@@ -47,22 +43,66 @@ export class VideoplayerComponent {
     }
   }
 
-  loadVideoData(videoId: number) {
-    this.data.getVideoById(videoId).subscribe(video => {
-      this.isLoading = true;
-      this.videoData = video;
-      console.log("this.videoData", this.videoData);
-      this.isLoading = false;
-      this.checkScreenWidth();      
+  //TODO needs fixing as different videos appear when resizing
+  addScreenWidthResizeListening() {
+    fromEvent(window, 'resize')
+    .pipe(
+      debounceTime(300) // Adjust the debounce time as needed
+    )
+    .subscribe((event: any) => {
+      this.screenWidth = window.innerWidth;
+      console.log(this.videoData);
+      
+      this.checkScreenWidth();
     });
   }
 
-  //TODO 
-  saveCurrentTimeWatchedToDB() {
+  loadVideoData(videoId: number) {
+    console.log("loadvideodata()");
+    
+    this.data.getVideoById(videoId).subscribe(video => {
+      setTimeout(() => {
+      this.isLoading = true;
+      this.videoData = video;
+      console.log("this.videoData", this.videoData);
+        
+        // this.checkScreenWidth();   
+        // this.loadVideoTimePlayed();   
+      }, 500);
+      this.isLoading = false;
+    });
+  }
+
+  loadVideoTimePlayed() {
+    let currentTime = localStorage.getItem("videoPlaybackTime") //TODO load from database instead
+    let loadedTime = parseFloat(currentTime!)
+    let expectingZero = loadedTime === 0;
+    console.log("expectingZero", expectingZero);
+    
+    console.log(loadedTime);
+    const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
+    
+    if (videoPlayer) {
+      videoPlayer.load();
+      // Once the video is loaded, set the current time back and play the video
+      videoPlayer.onloadeddata = () => {
+        videoPlayer.currentTime = loadedTime; // Restore the playback time
+          if (videoPlayer.currentTime === 0 && !expectingZero) {
+          console.log("videoPlayer.currentTime loaded on loadVideoTimePlayed()", videoPlayer.currentTime);
+          this.showErrorLoadingTime()
+        }
+        videoPlayer.play(); // Continue playing from the saved position
+      };
+    }
+  }
+
+  //TODO save to database
+  saveVideoTimePlayedToDB() {
     const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
     const currentTime = videoPlayer.currentTime; // Save current playback time
+    localStorage.setItem("videoPlaybackTime", currentTime.toString())
     console.log(currentTime);
-    
+    this.data.saveVideoTimePlayed(currentTime.toString())
   }
 
   openSelectQualityMenu(event: MouseEvent) {
@@ -85,29 +125,32 @@ export class VideoplayerComponent {
       '720p': this.baseURL + this.videoData.video_file_720p,
       '1080p': this.baseURL + this.videoData.video_file_1080p,
     };
+
   
     const selectedQualityFile = qualityMap[option];
   
     if (selectedQualityFile) {
       this.showQualityMenu = false;
-      console.log(selectedQualityFile);
+      console.log("selectedQualityFile loaded", selectedQualityFile);
       
       const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
   
       if (videoPlayer) {
-       
         const currentTime = videoPlayer.currentTime; // Save current playback time
         videoPlayer.src = selectedQualityFile;
-        videoPlayer.load(); //TODO sometimes it jumps back to start and does not take the currentTime
-        
-        // Once the video is loaded, set the current time back and play the video
-        videoPlayer.onloadeddata = () => {
+        videoPlayer.load();
+        if (!this.initialLoad) {
           
-          videoPlayer.currentTime = currentTime; // Restore the playback time
-          videoPlayer.play(); // Continue playing from the saved position
-        };
+          // Once the video is loaded, set the current time back and play the video
+          videoPlayer.onloadeddata = () => {
+            
+            videoPlayer.currentTime = currentTime; // Restore the playback time
+            videoPlayer.play(); // Continue playing from the saved position
+          this.initialLoad = false;
+          };
+        } 
+
       }
-      // this.showQualityChangeSuccess(option) //TODO should not appear on initial load
     }
   }
 
@@ -116,14 +159,16 @@ export class VideoplayerComponent {
     this.showQualityChangeSuccess(option)
   }
 
-
-
   showQualityChangeSuccess(input: string) {
     this.messageService.add({ severity: 'secondary', summary: "Settings updated", detail: `Video quality changed to ${input}` });
-}
+  }
+
+  showErrorLoadingTime() {
+    this.messageService.add({ severity: 'secondary', summary: "Loading error", detail: `There was an error loading the last time stamp`, key: 'bl', life: 10000 });
+  }
 
 directToDashboard() {
-  this.saveCurrentTimeWatchedToDB()
+  this.saveVideoTimePlayedToDB()
   //TODO remove settimeout
   setTimeout(() => {
     this.router.navigate(['/videos'])
@@ -149,11 +194,13 @@ directToDashboard() {
   }
 
   isMediumScreen() {
-    return this.screenWidth >= 720 && this.screenWidth < 1080 && this.currentScreenWidthRange !== 'between720And1080';
+    return this.screenWidth >= 720 && this.screenWidth < 1280 && this.currentScreenWidthRange !== 'between720And1280';
   }
 
   isLargeScreen() {
-    return this.screenWidth >= 1080 && this.currentScreenWidthRange !== 'above1080';
+    return this.screenWidth >= 1280 && this.currentScreenWidthRange !== 'above1280';
   }
+
+
 
 }
