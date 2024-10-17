@@ -17,6 +17,10 @@
   &:hover .video-quality-btn {
     display: block;
   }
+
+  &:hover .title {
+    display: flex;
+  }
 }
 
 #video-player {
@@ -81,9 +85,24 @@ header {
     font-size: 32px
   }
 
+.title {
+    display: none;
+    position: absolute;
+    bottom: 96px;
+    left: 24px;
+    font-size: 24px;
+    color: white;
+    max-width: 75%;
+}
+
 @media (min-width: 1441px) {
     .video-quality-btn {
         width: 48px;
-        // height: 120px;
+    }
+
+    .title {
+        bottom: 96px;
+        left: 40px;
+        font-size: 32px;
     }
 }

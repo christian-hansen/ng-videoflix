@@ -38,7 +38,12 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
-  getVideoById(video: any) {
-    console.log("video.id", video.id);
+  getVideoById(id: number): Observable<any> {
+    let singleVideoUrl = this.videosUrl + id;
+    console.log("singleVideoUrl", singleVideoUrl);
+    
+    return this.http
+      .get<any>(singleVideoUrl, { headers: this.setHeaders() })
+      .pipe(catchError(this.handleError));
   }
 }

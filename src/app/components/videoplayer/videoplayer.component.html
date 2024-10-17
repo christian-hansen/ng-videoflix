@@ -14,13 +14,16 @@
   </header>
 
 <div class="video-player-container" (click)="onContainerClick($event)">
-  <video
-    id="video-player"
-    autoplay
-    controls
-    poster="{{ baseURL + this.videoData.thumbnail_file }}"
-    src="{{ baseURL + this.videoData.video_file_720p }}"
-  ></video>
+    @if (videoData) {
+        <video
+        id="video-player"
+        autoplay
+        controls
+        poster="{{this.baseURL + this.videoData.thumbnail_file}}"
+        src="{{this.baseURL + this.videoData.video_file_360p}}"
+        ></video>
+    }
+    
   @if (!showQualityMenu) {
     <div class="video-quality-btn">
         <p-button
@@ -41,6 +44,11 @@
         }
     </div>
   }
+  @if (videoData) {
+
+      <div class="title">
+          {{videoData.title}}
+      </div>
+  }
 </div>
 <p-toast/>
-<!-- TODO add a close button for the videoplayer component that stores the current time to the video -->
