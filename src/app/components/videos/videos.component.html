@@ -16,7 +16,7 @@
       <div class="selected-video-details">
         <h2>{{ selectedVideo.title }}</h2>
         <div>{{ selectedVideo.description }}</div>
-        <p-button label="Play" icon="pi pi-play" [rounded]="true" (click)="loadVideoPlayer(selectedVideo)"/>
+        <p-button label="Play" icon="pi pi-play" [rounded]="true" (click)="loadVideoPlayer(selectedVideo.id)"/>
       </div>
     </div>
   </div>

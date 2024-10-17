@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-videos',
@@ -18,7 +19,7 @@ export class VideosComponent {
   selectedVideo: any;
   prevSelectedVideo: any;
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit() {
     this.loadGenres();
@@ -61,8 +62,7 @@ export class VideosComponent {
   }
 
   loadVideoPlayer(video: any) {
-    console.log(video);
-    //TODO load video into videoplayer
+    this.router.navigateByUrl(`/videos/${video}`);
   }
 
   closeSelectedVideo() {
