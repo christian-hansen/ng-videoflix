@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, HostListener } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
@@ -21,6 +21,8 @@ export class VideoplayerComponent {
   public baseURL: string = 'http://localhost:8000';
   qualities = ['360p', '720p', '1080p']; // List of video quality options
   showQualityMenu = false;
+  screenWidth: number = window.innerWidth;
+  currentScreenWidthRange: string = ''; // To track the current screen width range
   videoData: any = {
     created_at
     : 
@@ -54,24 +56,41 @@ export class VideoplayerComponent {
     "/media/videos/scifi01_1080p.mp4"
   }
 
-  constructor(private route: ActivatedRoute, private data: DataService, private messageService: MessageService) {}
+  constructor(private route: ActivatedRoute, private data: DataService, private messageService: MessageService, private router: Router) {}
+
+  // Listen to the window resize event
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.screenWidth = window.innerWidth;
+    this.checkScreenWidth();
+  }
 
   ngOnInit(): void {
-    
     this.videoId = this.route.snapshot.paramMap.get('videoId');
     console.log(this.route.snapshot);
     console.log(this.videoId);
-    
-
     this.loadVideoData();
-
   }
+
+  ngOnDestroy(): void {
+    if (this.player) {
+      this.player.dispose();
+    }
+  }
+
 
   //TODO
   loadVideoData() {
     console.log(this.videoData);
+    this.checkScreenWidth();
+  }
 
-    this.selectQuality(this.qualities[1]); // Pre-select default quality (720p)
+  //TODO 
+  saveCurrentTimeWatchedToDB() {
+    const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
+    const currentTime = videoPlayer.currentTime; // Save current playback time
+    console.log(currentTime);
+    
   }
 
   openSelectQualityMenu(event: MouseEvent) {
@@ -119,14 +138,50 @@ export class VideoplayerComponent {
     }
   }
 
-  ngOnDestroy(): void {
-    if (this.player) {
-      this.player.dispose();
-    }
+  manualSelectQuality(option: string) {
+    this.selectQuality(option)
+    this.showQualityChangeSuccess(option)
   }
+
+
 
   showQualityChangeSuccess(input: string) {
     this.messageService.add({ severity: 'secondary', summary: "Settings updated", detail: `Video quality changed to ${input}` });
 }
+
+directToDashboard() {
+  this.saveCurrentTimeWatchedToDB()
+  //TODO remove settimeout
+  setTimeout(() => {
+    this.router.navigate(['/videos'])
+  }, 500);
+}
+
+  // Method to check the screen width and perform actions based on breakpoints
+  checkScreenWidth() {
+    if (this.isSmallScreen()) {
+      this.currentScreenWidthRange = 'below720';
+      this.selectQuality('360p');
+    } else if (this.isMediumScreen()) {
+      this.currentScreenWidthRange = 'between720And1080';
+      this.selectQuality('720p');
+    } else if (this.isLargeScreen())  {
+      this.currentScreenWidthRange = 'above1080';
+      this.selectQuality('1080p');
+
+    }
+  }
+
+  isSmallScreen() {
+    return this.screenWidth < 720 && this.currentScreenWidthRange !== 'below720';
+  }
+
+  isMediumScreen() {
+    return this.screenWidth >= 720 && this.screenWidth < 1080 && this.currentScreenWidthRange !== 'between720And1080';
+  }
+
+  isLargeScreen() {
+    return this.screenWidth >= 1080 && this.currentScreenWidthRange !== 'above1080';
+  }
 
 }

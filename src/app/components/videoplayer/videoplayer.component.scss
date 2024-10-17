@@ -30,19 +30,19 @@
   flex-direction: column;
   align-items: center;
   position: absolute;
-  right: 144px;
+  right: 24px;
 }
 
 .video-quality-menu {
   background-color: lightgray;
   width: 64px;
-  bottom: 48px;
-  right: 144px;
+  bottom: 96px;
 }
 .video-quality-btn {
   background-color: transparent;
-  width: 48px;
-  bottom: 26px;
+  width: 24px;
+  bottom: 80px;
+
 }
 
 .quality-btn {
@@ -57,4 +57,33 @@
     background-color: darkgray;
     cursor: pointer;
   }
+}
+
+header {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+  }
+
+.background {
+    width: 100%;
+    padding: 24px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+  }
+  
+  .logo {
+    cursor: pointer;
+    color: white; 
+    font-size: 32px
+  }
+
+@media (min-width: 1441px) {
+    .video-quality-btn {
+        width: 48px;
+        // height: 120px;
+    }
 }

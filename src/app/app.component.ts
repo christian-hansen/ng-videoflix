@@ -15,6 +15,7 @@ import { filter } from 'rxjs';
 export class AppComponent {
   title = 'ng-videoflix';
   hideFooter = false;
+  hideHeader = false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     // Subscribe to router events to detect route changes
@@ -31,8 +32,10 @@ export class AppComponent {
     // Hide the footer for /videos/:id route
     if (currentUrl.startsWith('/videos/')) {
       this.hideFooter = true;
+      this.hideHeader = true;
     } else {
       this.hideFooter = false;
+      this.hideHeader = false;
     }
   }
 }

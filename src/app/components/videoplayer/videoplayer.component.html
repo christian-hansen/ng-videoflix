@@ -1,3 +1,18 @@
+<header class="background">
+  <div class="logo" (click)="directToDashboard()">VIDEOFLIX</div>
+  
+
+  <p-button
+  icon="pi pi-times"
+  [rounded]="true"
+  [text]="true"
+  severity="secondary"
+  size="large"
+  (click)="directToDashboard()"
+  />
+
+  </header>
+
 <div class="video-player-container" (click)="onContainerClick($event)">
   <video
     id="video-player"
@@ -20,7 +35,7 @@
   } @else {
     <div class="video-quality-menu">
         @for (quality of qualities; track quality) {
-            <div class="quality-btn" (click)="selectQuality(quality)">
+            <div class="quality-btn" (click)="manualSelectQuality(quality)">
             {{ quality }}
             </div>
         }
@@ -28,3 +43,4 @@
   }
 </div>
 <p-toast/>
+<!-- TODO add a close button for the videoplayer component that stores the current time to the video -->
