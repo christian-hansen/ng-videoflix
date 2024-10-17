@@ -5,12 +5,13 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-videoplayer',
   standalone: true,
-  imports: [ButtonModule, ToastModule, RippleModule],
+  imports: [ButtonModule, ToastModule, RippleModule, CommonModule],
   providers: [MessageService],
   templateUrl: './videoplayer.component.html',
   styleUrl: './videoplayer.component.scss'
