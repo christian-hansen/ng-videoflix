@@ -32,7 +32,7 @@ export class VideoplayerComponent {
   constructor(private route: ActivatedRoute, private data: DataService, private messageService: MessageService, private router: Router) {}
 
   ngOnInit(): void { 
-    this.addScreenWidthResizeListening();
+    // this.addScreenWidthResizeListening();
     this.videoId = this.route.snapshot.paramMap.get('videoId');
     this.loadVideoData(this.videoId);
   }
@@ -51,20 +51,18 @@ export class VideoplayerComponent {
     )
     .subscribe((event: any) => {
       this.screenWidth = window.innerWidth;
-      console.log(this.videoData);
       
       this.checkScreenWidth();
     });
   }
 
   loadVideoData(videoId: number) {
-    console.log("loadvideodata()");
+    // console.log("loadvideodata()");
     
     this.data.getVideoById(videoId).subscribe(video => {
       setTimeout(() => {
       this.isLoading = true;
       this.videoData = video;
-      console.log("this.videoData", this.videoData);
         
         // this.checkScreenWidth();   
         // this.loadVideoTimePlayed();   
@@ -77,9 +75,9 @@ export class VideoplayerComponent {
     let currentTime = localStorage.getItem("videoPlaybackTime") //TODO load from database instead
     let loadedTime = parseFloat(currentTime!)
     let expectingZero = loadedTime === 0;
-    console.log("expectingZero", expectingZero);
+    // console.log("expectingZero", expectingZero);
     
-    console.log(loadedTime);
+    // console.log(loadedTime);
     const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
     
     if (videoPlayer) {
@@ -88,7 +86,7 @@ export class VideoplayerComponent {
       videoPlayer.onloadeddata = () => {
         videoPlayer.currentTime = loadedTime; // Restore the playback time
           if (videoPlayer.currentTime === 0 && !expectingZero) {
-          console.log("videoPlayer.currentTime loaded on loadVideoTimePlayed()", videoPlayer.currentTime);
+          // console.log("videoPlayer.currentTime loaded on loadVideoTimePlayed()", videoPlayer.currentTime);
           this.showErrorLoadingTime()
         }
         videoPlayer.play(); // Continue playing from the saved position
@@ -101,7 +99,7 @@ export class VideoplayerComponent {
     const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
     const currentTime = videoPlayer.currentTime; // Save current playback time
     localStorage.setItem("videoPlaybackTime", currentTime.toString())
-    console.log(currentTime);
+    // console.log(currentTime);
     this.data.saveVideoTimePlayed(currentTime.toString())
   }
 
@@ -131,7 +129,7 @@ export class VideoplayerComponent {
   
     if (selectedQualityFile) {
       this.showQualityMenu = false;
-      console.log("selectedQualityFile loaded", selectedQualityFile);
+      // console.log("selectedQualityFile loaded", selectedQualityFile);
       
       const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
   
@@ -168,7 +166,7 @@ export class VideoplayerComponent {
   }
 
 directToDashboard() {
-  this.saveVideoTimePlayedToDB()
+  // this.saveVideoTimePlayedToDB()
   //TODO remove settimeout
   setTimeout(() => {
     this.router.navigate(['/videos'])

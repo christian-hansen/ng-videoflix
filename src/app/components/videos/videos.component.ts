@@ -19,7 +19,7 @@ export class VideosComponent {
   selectedVideo: any;
   prevSelectedVideo: any;
 
-  constructor(private dataService: DataService, private router: Router) {}
+  constructor(public dataService: DataService, private router: Router) {}
 
   ngOnInit() {
     this.loadGenres();
@@ -32,7 +32,7 @@ export class VideosComponent {
     this.isLoading = true;
     this.dataService.loadGenres().subscribe((genres: any[]) => {
       this.genres = genres.map((genre) => genre.name); // Extract the name of each genre
-      console.log('this.genres', this.genres);
+      // console.log('this.genres', this.genres);
       this.isLoading = false;
     });
   }
@@ -44,9 +44,13 @@ export class VideosComponent {
         (a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
-      console.log('this.videos', this.videos);
-      this.selectVideo(this.videos[0])
-      console.log("this.selectedvideo", this.selectedVideo);
+      // console.log('this.videos', this.videos);
+      if (this.dataService.prevSelectedVideo === undefined) {
+        this.selectVideo(this.videos[0])
+      } else {
+        this.selectVideo(this.dataService.prevSelectedVideo)
+      }
+      // console.log("this.selectedvideo", this.selectedVideo);
       
       this.isLoading = false;
     });
@@ -57,7 +61,7 @@ export class VideosComponent {
   }
 
   public loadVideo(video: any) {
-    console.log('Selected video with ID:', video);
+    // console.log('Selected video with ID:', video);
     this.selectVideo(video)
   }
 
@@ -66,13 +70,12 @@ export class VideosComponent {
   }
 
   closeSelectedVideo() {
-    this.selectedVideo = undefined;
-    console.log(this.selectedVideo);
+    this.dataService.selectedVideo = undefined;
     }
 
   selectVideo(video:any) {
-    this.selectedVideo = video;
-    this.prevSelectedVideo = video;
+    this.dataService.selectedVideo = video;
+    this.dataService.prevSelectedVideo = video;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -88,8 +91,8 @@ export class VideosComponent {
   }
 
   reloadPrevSelectedVideo(): void {
-    if(this.selectedVideo === undefined) {
-      this.selectVideo(this.prevSelectedVideo)      
+    if(this.dataService.selectedVideo === undefined) {
+      this.selectVideo(this.dataService.prevSelectedVideo)      
     } 
   }
 }

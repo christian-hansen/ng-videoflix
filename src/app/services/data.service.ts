@@ -9,6 +9,8 @@ import { environment } from '../../environments/environment.development';
 export class DataService {
   email!: string;
   username!: string;
+  selectedVideo: any;
+  prevSelectedVideo: any;
 
   private videosUrl = environment.baseUrl + '/videos/'; // API base URL
   private genresUrl = environment.baseUrl + '/genres/'; // API base URL
@@ -39,7 +41,7 @@ export class DataService {
   }
 
   getVideoById(id: number): Observable<any> {
-    console.log("Load single video");
+    // console.log("Load single video");
     
     let singleVideoUrl = this.videosUrl + id;    
     return this.http
