@@ -1,0 +1,55 @@
+<header class="background">
+  <div class="logo" (click)="directToDashboard()">VIDEOFLIX</div>
+  
+
+  <p-button
+  icon="pi pi-times"
+  [rounded]="true"
+  [text]="true"
+  severity="secondary"
+  size="large"
+  (click)="directToDashboard()"
+  />
+
+  </header>
+
+<div class="video-player-container" (click)="onContainerClick($event)">
+    @if (videoData) {
+        <video
+        id="video-player"
+        autoplay
+        controls
+        poster="{{this.baseURL + this.videoData.thumbnail_file}}"
+        src="{{this.baseURL + this.videoData.video_file_720p}}"
+        ></video>
+    }
+    
+  @if (!showQualityMenu) {
+    <div class="video-quality-btn">
+        <p-button
+        icon="pi pi-cog"
+        [rounded]="true"
+        [text]="true"
+        severity="secondary"
+        size="large"
+        (click)="openSelectQualityMenu($event)"
+        />
+    </div>
+  } @else {
+    <div class="video-quality-menu">
+        @for (quality of qualities; track quality) {
+            <div class="quality-btn" (click)="manualSelectQuality(quality)">
+            {{ quality }}
+            </div>
+        }
+    </div>
+  }
+  @if (videoData) {
+
+      <div class="title">
+          {{videoData.title}}
+      </div>
+  }
+</div>
+<p-toast position="bottom-left" key="bl" />
+<p-toast/>

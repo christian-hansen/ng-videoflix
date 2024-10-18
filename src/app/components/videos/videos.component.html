@@ -1,82 +1,61 @@
 <div class="videos-container">
-    <div class="section-container">
-        <h3>
-            New on Videoflix
-        </h3>
-        <div class="video-row-container">
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-        </div>
+  @if (dataService.selectedVideo) {
+  <div class="hero-container">
+      <div class="selected-video">
+        <p-button icon="pi pi-times" class="close-btn" [rounded]="true" severity="secondary" (click)="closeSelectedVideo()"/>
+      @if (dataService.selectedVideo.video_file) {
+      <video
+        autoplay
+        onloadedmetadata="this.volume = 0.25"
+        playsinline
+        [poster]="baseURL + dataService.selectedVideo.thumbnail_file"
+        [src]="baseURL + dataService.selectedVideo.video_file"
+        class="background-video"
+      ></video>
+      }
+      <div class="selected-video-details">
+        <h2>{{ dataService.selectedVideo.title }}</h2>
+        <div>{{ dataService.selectedVideo.description }}</div>
+        <p-button label="Play" icon="pi pi-play" [rounded]="true" (click)="loadVideoPlayer(dataService.selectedVideo.id)"/>
+      </div>
     </div>
-    <!-- <div class="section-container">
-        <h3>
-            Documentary
-        </h3>
-        <div class="video-row-container">
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-        </div>
+  </div>
+  }
+
+  <!-- First section that includes all videos. -->
+  <div class="section-container">
+    <h2>New on Videoflix</h2>
+    <div class="video-row-container">
+      @for (video of videos; track video) {
+      <div
+        class="video-item"
+        [ngStyle]="video.thumbnail_file ? {'background-image' : 'url(' + baseURL + video.thumbnail_file + ')'} : {}"
+        (click)="loadVideo(video)"
+      >
+        <h3>{{ video.title }}</h3>
+      </div>
+      }
     </div>
-    <div class="section-container">
-        <h3>
-            Drama
-        </h3>
-        <div class="video-row-container">
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-        </div>
+  </div>
+
+  <!-- Dynamic genre sections -->
+  @for (genre of genres; track genre) {
+  <div class="section-container">
+    @if (filterVideosByGenre(genre).length > 0) {
+    <h2>{{ genre }}</h2>
+    <div class="video-row-container">
+      @for (video of filterVideosByGenre(genre); track video) {
+
+      <div
+        class="video-item"
+        [ngStyle]="video.thumbnail_file ? {'background-image' : 'url(' + baseURL + video.thumbnail_file + ')'} : {}"
+        (click)="loadVideo(video)"
+      >
+        <h3>{{ video.title }}</h3>
+      </div>
+      }
     </div>
-    <div class="section-container">
-        <h3>
-            Romance
-        </h3>
-        <div class="video-row-container">
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-        </div>
-    </div>
-    <div class="section-container">
-        <h3>
-            Comedy
-        </h3>
-        <div class="video-row-container">
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-        </div>
-    </div>
-    <div class="section-container">
-        <h3>
-            Horror
-        </h3>
-        <div class="video-row-container">
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-        </div>
-    </div>
-    <div class="section-container">
-        <h3>
-            Sports
-        </h3>
-        <div class="video-row-container">
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-        </div>
-    </div>
-    <div class="section-container">
-        <h3>
-            Theater
-        </h3>
-        <div class="video-row-container">
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-            <div class="video-item"></div>
-        </div>
-    </div> -->
+    }
+  </div>
+  }
 </div>
