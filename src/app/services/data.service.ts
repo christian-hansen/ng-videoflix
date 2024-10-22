@@ -28,6 +28,7 @@ export class DataService {
   }
   //Load all videos
   loadVideos(): Observable<any> {
+    this.loadAuthToken();
     return this.http
       .get<any>(this.videosUrl, { headers: this.setHeaders() })
       .pipe(catchError(this.handleError));
@@ -35,14 +36,14 @@ export class DataService {
 
   //Load all genres
   loadGenres(): Observable<any> {
+    this.loadAuthToken();
     return this.http
       .get<any>(this.genresUrl, { headers: this.setHeaders() })
       .pipe(catchError(this.handleError));
   }
 
   getVideoById(id: number): Observable<any> {
-    // console.log("Load single video");
-    
+    this.loadAuthToken();
     let singleVideoUrl = this.videosUrl + id;    
     return this.http
       .get<any>(singleVideoUrl, { headers: this.setHeaders() })
@@ -52,5 +53,9 @@ export class DataService {
   saveVideoTimePlayed(time: string) {
     let timePlayed = time;
     console.log(timePlayed) //TODO store in database
+  }
+
+  loadAuthToken() {
+    this.authToken = 'Token ' + localStorage.getItem('token');
   }
 }
