@@ -3,7 +3,7 @@
   <div class="hero-container">
       <div class="selected-video">
         <p-button icon="pi pi-times" class="close-btn" [rounded]="true" severity="secondary" (click)="closeSelectedVideo()"/>
-      @if (dataService.selectedVideo.video_file) {
+      @if (dataService.selectedVideo.video_file_720p) {
       <video
         autoplay
         onloadedmetadata="this.volume = 0.25"
@@ -14,9 +14,12 @@
       ></video>
       }
       <div class="selected-video-details">
+
+          <p-button label="Play" class="play-btn-mobile" icon="pi pi-play" [rounded]="true" (click)="loadVideoPlayer(dataService.selectedVideo.id)"/>
+
         <h2>{{ dataService.selectedVideo.title }}</h2>
         <div>{{ dataService.selectedVideo.description }}</div>
-        <p-button label="Play" icon="pi pi-play" [rounded]="true" (click)="loadVideoPlayer(dataService.selectedVideo.id)"/>
+          <p-button label="Play" class="play-btn-desktop" icon="pi pi-play" [rounded]="true" (click)="loadVideoPlayer(dataService.selectedVideo.id)"/>
       </div>
     </div>
   </div>
@@ -25,7 +28,7 @@
   <!-- First section that includes all videos. -->
   <div class="section-container">
     <h2>New on Videoflix</h2>
-    <div class="video-row-container">
+    <div class="video-row-container" #videoRowContainer>
       @for (video of videos; track video) {
       <div
         class="video-item"
