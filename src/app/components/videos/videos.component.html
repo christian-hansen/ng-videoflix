@@ -8,8 +8,8 @@
         autoplay
         onloadedmetadata="this.volume = 0.25"
         playsinline
-        [poster]="baseURL + dataService.selectedVideo.thumbnail_file"
-        [src]="baseURL + dataService.selectedVideo.video_file"
+        [poster]="hostURL + dataService.selectedVideo.thumbnail_file"
+        [src]="hostURL + dataService.selectedVideo.video_file"
         class="background-video"
       ></video>
       }
@@ -29,7 +29,7 @@
       @for (video of videos; track video) {
       <div
         class="video-item"
-        [ngStyle]="video.thumbnail_file ? {'background-image' : 'url(' + baseURL + video.thumbnail_file + ')'} : {}"
+        [ngStyle]="video.thumbnail_file ? {'background-image' : 'url(' + hostURL + video.thumbnail_file + ')'} : {}"
         (click)="loadVideo(video)"
       >
         <h3>{{ video.title }}</h3>
@@ -48,7 +48,7 @@
 
       <div
         class="video-item"
-        [ngStyle]="video.thumbnail_file ? {'background-image' : 'url(' + baseURL + video.thumbnail_file + ')'} : {}"
+        [ngStyle]="video.thumbnail_file ? {'background-image' : 'url(' + hostURL + video.thumbnail_file + ')'} : {}"
         (click)="loadVideo(video)"
       >
         <h3>{{ video.title }}</h3>

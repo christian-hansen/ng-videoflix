@@ -7,6 +7,7 @@ import { RippleModule } from 'primeng/ripple';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { debounceTime, fromEvent } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 
 
 @Component({
@@ -20,8 +21,9 @@ import { debounceTime, fromEvent } from 'rxjs';
 export class VideoplayerComponent {
   videoId: any;
   player: any;
-  public baseURL: string = 'http://localhost:8000';
-  qualities = ['360p', '720p', '1080p']; // List of video quality options
+  public hostURL: string = environment.hostUrl;
+  // qualities = ['360p', '720p', '1080p']; // List of video quality options
+  qualities = ['360p', '720p', 'Source']; // List of video quality options
   showQualityMenu = false;
   screenWidth: number = window.innerWidth;
   currentScreenWidthRange: string = ''; // To track the current screen width range
@@ -119,9 +121,9 @@ export class VideoplayerComponent {
 
   selectQuality(option: string) {
     const qualityMap: { [key: string]: string } = {
-      '360p': this.baseURL + this.videoData.video_file_360p,
-      '720p': this.baseURL + this.videoData.video_file_720p,
-      '1080p': this.baseURL + this.videoData.video_file_1080p,
+      '360p': this.hostURL + this.videoData.video_file_360p,
+      '720p': this.hostURL + this.videoData.video_file_720p,
+      'Source': this.hostURL + this.videoData.video_file,
     };
 
   
@@ -179,11 +181,11 @@ directToDashboard() {
       this.currentScreenWidthRange = 'below720';
       this.selectQuality('360p');
     } else if (this.isMediumScreen()) {
-      this.currentScreenWidthRange = 'between720And1080';
+      this.currentScreenWidthRange = 'between720And1280';
       this.selectQuality('720p');
     } else if (this.isLargeScreen())  {
-      this.currentScreenWidthRange = 'above1080';
-      this.selectQuality('1080p');
+      this.currentScreenWidthRange = 'above1280';
+      this.selectQuality('Source');
     }
   }
 
