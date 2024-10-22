@@ -14,16 +14,18 @@ import { AuthService } from '../../services/auth.service';
 export class HeaderComponent {
   currentRoute!: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
       this.currentRoute = this.router.url;
     });
+    
+    
   }
 
   directToHome() {
-    this.router.navigate([''])
+    this.router.navigate(['videos'])
   }
 
   login() {
@@ -37,17 +39,17 @@ export class HeaderComponent {
   }
 
   isShowLoginButtonRoute(): boolean {
-    const routesToShow = ['/register', '/', '/forgot-password', '/forgot-username', '/activate', '/reset-password', '/register-success'];  // Routes where the login button should not be hidden
+    const routesToShow = ['/register', '/', '/forgot-password', '/forgot-username', '/activate', '/reset-password', '/register-success'];
     return routesToShow.includes(this.currentRoute);
   }
 
-  isShowLogoutButtonRoute(): boolean {
-    const routesToShow = ['/videos'];  // Routes where the login button should not be hidden
-    return routesToShow.includes(this.currentRoute);
+  isHideButtonsRoute(): boolean {
+    const routesToHide = ['/imprint', '/privacy'];
+    return routesToHide.includes(this.currentRoute);
   }
 
   public isBlackBackgroundRoute(): boolean {
-    const routesToShowBlackBackground = ['/imprint', '/privacy', '/videos'];  // Routes where the login button should not be hidden
+    const routesToShowBlackBackground = ['/imprint', '/privacy', '/videos'];
     return routesToShowBlackBackground.includes(this.currentRoute);
   }
 }

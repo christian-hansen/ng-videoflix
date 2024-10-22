@@ -3,6 +3,7 @@ import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-videos',
@@ -15,8 +16,7 @@ export class VideosComponent {
   isLoading: boolean = false;
   videos: any[] = [];
   public genres: string[] = [];
-  public baseURL: string = 'http://localhost:8000';
-  selectedVideo: any;
+  public hostURL: string = environment.hostUrl;
   prevSelectedVideo: any;
 
   constructor(public dataService: DataService, private router: Router) {}

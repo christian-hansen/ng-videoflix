@@ -9,7 +9,7 @@
   (click)="login()"
 />
 }
-@if (isShowLogoutButtonRoute()) {
+@if (!isShowLoginButtonRoute() && !isHideButtonsRoute() ) {
 <p-button
   label="Log out"
   [rounded]="true"
