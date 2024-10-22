@@ -44,7 +44,7 @@ export class HeaderComponent {
   }
 
   isHideButtonsRoute(): boolean {
-    const routesToHide = ['/imprint', '/privacy'];
+    const routesToHide = ['/imprint', '/privacy', '/login'];
     return routesToHide.includes(this.currentRoute);
   }
 

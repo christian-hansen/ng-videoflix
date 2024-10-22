@@ -39,7 +39,7 @@ buildLoginForm() {
     password: new FormControl('', [Validators.required]),
     setCookie: new FormControl<string | null>(null)
 });
-  this.watchSetCookieChanges();
+  // this.watchSetCookieChanges();
 }
 
   async login() {
@@ -51,27 +51,29 @@ buildLoginForm() {
 
     try {
       let resp: any = await this.auth.loginWithUsernameAndPassword(loginFormData);
-      if (resp.token) {
+      if (resp.token) {       
         localStorage.setItem('token', resp.token);
-        this.router.navigateByUrl('/videos');
+        setTimeout(() => {
+          this.router.navigateByUrl('/videos');
+        }, 500);
       }
     } catch (e: any) {
       this.displayErrorMessage(e)
     }
   }
 
-  watchSetCookieChanges() {
-    this.loginForm.get('setCookie')?.enable;
-    this.loginForm.get('setCookie')?.valueChanges.subscribe(value => {  
-      if (value[0] === "cookieSet") {
-        console.log("Cookie set");
-        //TODO save cookie
-      } else {
-        console.log("Cookie not set");
-        //TODO clear cookie
-      }
-    });
-  }
+  // watchSetCookieChanges() {
+  //   this.loginForm.get('setCookie')?.enable;
+  //   this.loginForm.get('setCookie')?.valueChanges.subscribe(value => {  
+  //     if (value[0] === "cookieSet") {
+  //       console.log("Cookie set");
+  //       //TODO save cookie
+  //     } else {
+  //       console.log("Cookie not set");
+  //       //TODO clear cookie
+  //     }
+  //   });
+  // }
 
   displayErrorMessage(e: any) {
     console.log(e);
