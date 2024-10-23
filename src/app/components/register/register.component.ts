@@ -32,12 +32,12 @@ export class RegisterComponent {
   }
 
   ngOnInit(){
-    console.log("this.data.email in register component", this.data.email);
+    // console.log("this.data.email in register component", this.data.email);
     this.buildRegisterForm();
 
       // Subscribe to form's statusChanges to log validity state
   this.registerForm.statusChanges.subscribe(status => {
-    console.log('Form Valid:', this.registerForm.valid);
+    // console.log('Form Valid:', this.registerForm.valid);
   });
   }
 
@@ -85,12 +85,12 @@ export class RegisterComponent {
       password: this.registerForm.value.password,
     };
 
-    console.log(regFormData);
+    // console.log(regFormData);
     
 
     try {
         let resp: any = await this.auth.registerWithUsernameAndPassword(regFormData);
-        console.log(resp.message);
+        // console.log(resp.message);
         this.router.navigate(['/register-success']);
       } catch (e: any) {
         this.messages = [{ severity: 'error', detail: `${e.error.error}` }];

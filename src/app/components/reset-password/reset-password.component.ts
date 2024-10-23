@@ -47,7 +47,7 @@ export class ResetPasswordComponent {
 
   requestPasswordUpdate() {
     const password = this.resetPasswordForm.get('password')?.value;
-    console.log("Password", password);
+    // console.log("Password", password);
   
     this.route.params.subscribe((params) => {
       const uidb64 = params['id'];
@@ -55,9 +55,9 @@ export class ResetPasswordComponent {
   
       this.auth.updatePassword(uidb64, token, password)
         .then((resp: any) => {
-          console.log(resp);
+          // console.log(resp);
           this.messages = [
-            { severity: 'success', detail: `${resp.detail}. You will be redirected to login.` },
+            { severity: 'success', detail: `${resp.detail} You will be redirected to login.` },
           ];
           setTimeout(() => {
             this.router.navigateByUrl('login');

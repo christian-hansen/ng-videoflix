@@ -82,7 +82,7 @@ export class AuthService {
       confirm_password: password,
     };
 
-    console.log(url, body);
+    // console.log(url, body);
 
     return lastValueFrom(this.http.post(url, body));
   }
