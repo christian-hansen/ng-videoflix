@@ -43,7 +43,7 @@ export class ForgotUsernameComponent {
       let resp: any = await this.auth.requestUsernameReminder(email);
       console.log(resp);
       this.messages = [
-        { severity: 'info', detail: `${resp.detail}. Please check your emails.` },
+        { severity: 'success', detail: `${resp.detail} Please check your emails.` },
       ];
       console.log("Username reminder mail sent to", email);
       setTimeout(() => {

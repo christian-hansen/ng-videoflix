@@ -41,11 +41,11 @@ export class ForgotPasswordComponent {
     const email = this.forgotPasswordForm.get('email')?.value
     try {
       let resp: any = await this.auth.requestPasswordReset(email);
-      console.log(resp);
+      // console.log(resp);
       this.messages = [
-        { severity: 'info', detail: `${resp.detail}. Please check your emails and follow the instructions to reset your password.` },
+        { severity: 'success', detail: `${resp.detail} Please check your emails and follow the instructions to reset your password.` },
       ];
-      console.log("Password reset mail sent to", email);
+      // console.log("Password reset mail sent to", email);
       setTimeout(() => {
         this.router.navigateByUrl('login');
       }, 10000);

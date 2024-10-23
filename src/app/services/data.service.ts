@@ -52,7 +52,7 @@ export class DataService {
 
   saveVideoTimePlayed(time: string) {
     let timePlayed = time;
-    console.log(timePlayed) //TODO store in database
+    // console.log(timePlayed) //TODO store in database
   }
 
   loadAuthToken() {
